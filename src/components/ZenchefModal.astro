@@ -1,0 +1,47 @@
+---
+// Placeholder voor de Zenchef-widget. Triggert via knoppen met data-zenchef-open.
+---
+
+<div class="zc-overlay" data-zenchef-overlay role="dialog" aria-modal="true" aria-labelledby="zc-title" hidden>
+  <div class="zc-modal">
+    <button type="button" class="zc-close" aria-label="Sluit reserveringsvenster" data-zenchef-close>
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <line x1="6" y1="6" x2="18" y2="18"/>
+        <line x1="6" y1="18" x2="18" y2="6"/>
+      </svg>
+    </button>
+
+    <span class="zc-tag">Reserveren</span>
+    <h2 id="zc-title" class="font-display text-3xl mt-3 leading-tight">Tafel bij Xuma</h2>
+    <p class="text-sm text-[rgba(34,23,16,0.65)] mt-1.5">
+      Binnenkort koppelen we Zenchef direct aan deze knop, zodat je live beschikbaarheid ziet en meteen kunt boeken.
+    </p>
+
+    <div class="zc-placeholder" aria-hidden="true">
+      <div class="text-[0.65rem] uppercase tracking-[0.18em] text-[var(--color-copper-dark)] mb-2">Zenchef widget</div>
+      <div class="zc-row-3">
+        <input class="zc-input" type="text" value="Vr 18 dec" readonly aria-label="Datum"/>
+        <input class="zc-input" type="text" value="19:00" readonly aria-label="Tijd"/>
+        <input class="zc-input" type="text" value="2 pers" readonly aria-label="Personen"/>
+      </div>
+      <div class="mt-3">
+        <input class="zc-input" type="text" placeholder="Naam" aria-label="Naam"/>
+      </div>
+      <div class="zc-row mt-2">
+        <input class="zc-input" type="text" placeholder="E-mail" aria-label="E-mail"/>
+        <input class="zc-input" type="text" placeholder="Telefoon" aria-label="Telefoon"/>
+      </div>
+      <button type="button" class="btn btn-primary w-full justify-center mt-4" disabled style="opacity:0.55; cursor:not-allowed;">
+        Reservering bevestigen
+      </button>
+      <p class="text-[0.72rem] text-[rgba(34,23,16,0.55)] mt-3 text-center">
+        Demo. De echte Zenchef-widget verschijnt hier zodra de koppeling actief is.
+      </p>
+    </div>
+
+    <div class="flex flex-col sm:flex-row gap-3">
+      <a href="tel:0113854494" class="btn btn-ghost flex-1 justify-center">Bel 0113 85 44 94</a>
+      <a href="mailto:info@xumagoes.nl" class="btn btn-ghost flex-1 justify-center">Mail ons</a>
+    </div>
+  </div>
+</div>

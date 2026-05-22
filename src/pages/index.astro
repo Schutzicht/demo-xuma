@@ -1,0 +1,410 @@
+---
+import Base from "../layouts/Base.astro";
+import Photo from "../components/Photo.astro";
+
+interface Mood {
+  label: string;
+  sub: string;
+  dish: string;
+  price: string;
+  story: string;
+  photo: string;
+  icon: string;
+}
+
+const moods: Mood[] = [
+  {
+    label: "Romantisch avondje",
+    sub: "Twee, dimlicht, geen haast",
+    dish: "Het Proefmenu",
+    price: "€ 59,50 p.p.",
+    story: "Drie gangen die in elkaars verlengde liggen, samengesteld door de chef. Begint zacht, eindigt zoet.",
+    photo: "/photos-raw/IMG_7270-min-scaled.webp",
+    icon: "candle",
+  },
+  {
+    label: "Verrassen op tafel",
+    sub: "Voor wie indruk wil maken",
+    dish: "Oesters Xuma Style",
+    price: "€ 4,50 per stuk",
+    story: "Codium-olie, chili crisps en yuzuschuim. Klassiek omgegooid, in één hap weg.",
+    photo: "/photos-raw/DSC03555-min-scaled.webp",
+    icon: "sparkle",
+  },
+  {
+    label: "Snelle lunch",
+    sub: "Tussen werk en de middag door",
+    dish: "Open steak sandwich",
+    price: "€ 18,50",
+    story: "Sucadelapje, gerookte mayo, krokante uitjes op zuurdesem. Stevig genoeg, vlot gebracht.",
+    photo: "/photos-raw/IMG_7253-min-scaled.webp",
+    icon: "clock",
+  },
+  {
+    label: "Vegetarisch verfijnd",
+    sub: "Vol zonder vlees",
+    dish: "Risotto van het seizoen",
+    price: "€ 22,50",
+    story: "Met geroosterde pompoen, salie en hazelnoot. Het seizoen op een diep bord.",
+    photo: "/photos-raw/IMG_7122V2-min-scaled.webp",
+    icon: "leaf",
+  },
+  {
+    label: "Apero met vrienden",
+    sub: "Klein delen aan de bar",
+    dish: "Tempura garnalen",
+    price: "€ 16,50",
+    story: "Acht stuks met yuzu mayo en limoen. Bestel er meteen onze Xuma Spritz bij.",
+    photo: "/photos-raw/IMG_7396-min-scaled.webp",
+    icon: "glass",
+  },
+  {
+    label: "Iets dat opvalt",
+    sub: "Voor wie iets nieuws wil",
+    dish: "Half haantje",
+    price: "€ 24,50",
+    story: "Gemarineerd in gochujang met gepofte aardappel. Zacht, kruidig, met een glans.",
+    photo: "/photos-raw/IMG_7124-min-scaled.webp",
+    icon: "flame",
+  },
+];
+
+const favorites = [
+  { name: "Carpaccio", desc: "Truffelmayonaise, parmezaan, rucola, pijnboompitten", price: "16,50" },
+  { name: "Oesters Xuma Style", desc: "Codium-olie, chili crisps, yuzuschuim", price: "4,50 per stuk" },
+  { name: "Tonijn tataki", desc: "Sesam, soja-mirin, daikon, wasabicrumble", price: "17,50" },
+  { name: "Kreeftenbitterbal", desc: "Cocktailsaus, citroen", price: "15,50" },
+  { name: "Ossenhaas", desc: "Misoboter, geroosterde groenten, jus van zwarte knoflook", price: "32,50" },
+  { name: "Dessert Xuma", desc: "Chef's signature finale", price: "12,50" },
+];
+---
+
+<Base>
+  <!-- Hero -->
+  <section class="relative bg-[var(--color-mocha)] text-[var(--color-bone)] overflow-hidden">
+    <div class="absolute inset-0">
+      <img src="/photos-raw/DSC01206-min-scaled.webp" alt="Terras van Xuma aan de Veste" class="absolute inset-0 w-full h-full object-cover opacity-40"/>
+      <div class="absolute inset-0 bg-gradient-to-r from-[var(--color-ink)]/85 via-[var(--color-ink)]/60 to-transparent"></div>
+    </div>
+    <img src="/brand/letter-x.png" alt="" aria-hidden="true" class="letter-mark letter-mark--xl"/>
+    <div class="strand-rail strand-rail--right strand-rail--light"></div>
+    <div class="container relative grid lg:grid-cols-[1.1fr_0.9fr] gap-12 items-center pt-36 sm:pt-44 pb-20 sm:pb-28" style="z-index:2">
+      <div data-reveal>
+        <span class="eyebrow" style="color: var(--season-accent)">
+          <span data-season-text="lente">Voorjaar aan de Veste</span>
+          <span data-season-text="zomer">Zomeravonden aan de Veste</span>
+          <span data-season-text="herfst">Herfst aan de Veste</span>
+          <span data-season-text="winter">Winters warm onthaal</span>
+        </span>
+        <h1 class="font-display text-5xl sm:text-6xl md:text-7xl leading-[0.95] mt-4 tracking-tight">
+          Wereldse smaken,<br/>
+          <em class="not-italic" style="color: var(--season-accent)">Zeeuwse</em> producten.
+        </h1>
+        <p class="mt-6 max-w-[52ch] text-[rgba(246,239,227,0.82)] text-lg leading-relaxed">
+          <span data-season-text="lente">De ramen gaan open, de eerste asperges zijn binnen. Wereldse smaken met Zeeuwse producten, telkens met een onverwachte twist.</span>
+          <span data-season-text="zomer">Aan de waterkant, ongedwongen. Wereldse smaken met Zeeuwse producten, frisser tijdens de zomermaanden.</span>
+          <span data-season-text="herfst">Diepere smaken, lange avonden, wild en knolgewassen. Wereldse smaken met Zeeuwse producten, gevuld met najaarsoogst.</span>
+          <span data-season-text="winter">Warme kamers, gedempt licht, langere avonden. Wereldse smaken met Zeeuwse producten, troostend bereid.</span>
+        </p>
+        <div class="mt-8 flex flex-col sm:flex-row gap-3">
+          <button type="button" class="btn btn-light" data-zenchef-open>
+            Reserveren
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M5 12h14"/><path d="m13 6 6 6-6 6"/>
+            </svg>
+          </button>
+          <a href="/menukaart" class="btn btn-ghost" style="color: var(--color-bone); border-color: rgba(246,239,227,0.4);">
+            Bekijk de menukaart
+          </a>
+        </div>
+        <div class="mt-10 flex flex-wrap items-center gap-3 text-sm text-[rgba(246,239,227,0.7)]">
+          <span>Dam 2, Goes</span>
+          <span class="divider-dot"></span>
+          <span>Dagelijks 11:00 tot 23:00</span>
+          <span class="divider-dot"></span>
+          <span>0113 85 44 94</span>
+        </div>
+      </div>
+
+      <div class="hidden lg:grid grid-cols-2 gap-3" data-reveal>
+        <Photo src="/photos-raw/DSC03555-min-scaled.webp" alt="Oester gerecht in gouden licht" aspect="3 / 4" class="translate-y-6"/>
+        <div class="grid gap-3">
+          <Photo src="/photos-raw/IMG_7122V2-min-scaled.webp" alt="Signature wandborden in het interieur" aspect="1 / 1"/>
+          <Photo src="/photos-raw/IMG_7270-min-scaled.webp" alt="Restaurant interieur met gouden wandlampen" aspect="3 / 4"/>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Intro / Concept -->
+  <section class="section bg-strands">
+    <div class="container grid lg:grid-cols-[1fr_1.1fr] gap-14 items-center">
+      <div data-reveal>
+        <Photo src="/photos-raw/IMG_7122V2-min-scaled.webp" alt="Signature interieur met wandborden en handgeweven kussens" aspect="4 / 5"/>
+      </div>
+      <div data-reveal>
+        <span class="eyebrow">Over Xuma</span>
+        <h2 class="font-display text-4xl sm:text-5xl mt-3 leading-[1.05]">
+          Een voormalige smederij, nu een culinaire ontmoetingsplek.
+        </h2>
+        <p class="mt-5 text-base leading-relaxed text-[rgba(34,23,16,0.78)] max-w-[58ch]">
+          In het historische pand aan de Dam, met uitzicht over de Veste, hebben we ruimte gemaakt voor beleving. De architectuur uit een ander tijdperk vraagt om koken dat verrast, dus ontstaat hier de combinatie van wereldse smaken met pure, Zeeuwse ingredi&euml;nten. Niet klassiek uit het boekje, maar telkens met die ene creatieve twist die je bijblijft.
+        </p>
+        <div class="mt-7 grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-[600px]">
+          <div class="border-t border-[var(--color-line)] pt-3">
+            <div class="font-display text-2xl">Lokaal</div>
+            <p class="text-xs text-[rgba(34,23,16,0.6)] mt-1">Zeeuwse producten als basis</p>
+          </div>
+          <div class="border-t border-[var(--color-line)] pt-3">
+            <div class="font-display text-2xl">Wereld</div>
+            <p class="text-xs text-[rgba(34,23,16,0.6)] mt-1">Smaken uit Azi&euml; tot Zuid-Amerika</p>
+          </div>
+          <div class="border-t border-[var(--color-line)] pt-3">
+            <div class="font-display text-2xl">Twist</div>
+            <p class="text-xs text-[rgba(34,23,16,0.6)] mt-1">Contrast in textuur en kruiding</p>
+          </div>
+        </div>
+        <a href="/over-xuma" class="inline-flex items-center gap-2 mt-8 text-sm font-medium text-[var(--color-copper-dark)] hover:text-[var(--color-copper)]">
+          Lees ons verhaal
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M5 12h14"/><path d="m13 6 6 6-6 6"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Favorites -->
+  <section class="section bg-[var(--color-cream)]">
+    <div class="container">
+      <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-12" data-reveal>
+        <div>
+          <span class="eyebrow">Xuma's favorites</span>
+          <h2 class="font-display text-4xl sm:text-5xl mt-3 leading-[1.05]">Gerechten waar gasten voor terugkomen.</h2>
+        </div>
+        <a href="/menukaart" class="btn btn-ghost self-start">Volledige menukaart</a>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-x-12 gap-y-1" data-reveal>
+        {
+          favorites.map((dish) => (
+            <article class="menu-item">
+              <div>
+                <div class="menu-item__name">{dish.name}</div>
+                <div class="menu-item__desc">{dish.desc}</div>
+              </div>
+              <div class="menu-item__price">&euro; {dish.price}</div>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Smaakkompas: Vraag het de chef -->
+  <section class="section">
+    <div class="container">
+      <div class="grid lg:grid-cols-[0.9fr_1.4fr] gap-10 lg:gap-14 items-start">
+        <div data-reveal>
+          <span class="eyebrow">Smaakkompas</span>
+          <h2 class="font-display text-4xl sm:text-5xl mt-3 leading-[1.05]">Vraag het de chef.</h2>
+          <p class="mt-5 text-base leading-relaxed text-[rgba(34,23,16,0.75)] max-w-[42ch]">
+            Geen idee waar te beginnen? Kies een stemming, dan stelt de chef een gerecht voor.
+          </p>
+          <p class="mt-4 text-xs uppercase tracking-[0.18em] text-[var(--season-accent-dark)]">
+            Zes momenten, zes aanbevelingen
+          </p>
+        </div>
+
+        <div data-reveal>
+          <div class="chef-grid">
+            {moods.map((m, i) => (
+              <button type="button" class="chef-mood" data-chef-mood={i} aria-pressed="false">
+                <span class="chef-mood__icon" aria-hidden="true">
+                  {m.icon === "candle" && (
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c1.2 2 2.2 3.2 2.2 4.6a2.2 2.2 0 1 1-4.4 0C9.8 6.2 10.8 5 12 3z"/><rect x="9" y="10" width="6" height="9" rx="1"/><line x1="7" y1="20" x2="17" y2="20"/></svg>
+                  )}
+                  {m.icon === "sparkle" && (
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M5.6 18.4l2.1-2.1M16.3 7.7l2.1-2.1"/></svg>
+                  )}
+                  {m.icon === "clock" && (
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15.5 14"/></svg>
+                  )}
+                  {m.icon === "leaf" && (
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 19c0-9 7-14 15-14 0 8-5 15-14 15-1 0-1-1-1-1z"/><line x1="5" y1="19" x2="12" y2="12"/></svg>
+                  )}
+                  {m.icon === "glass" && (
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12l-2 7a4 4 0 0 1-8 0L6 3z"/><line x1="12" y1="14" x2="12" y2="20"/><line x1="8" y1="20" x2="16" y2="20"/></svg>
+                  )}
+                  {m.icon === "flame" && (
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c2 4 5 5 5 9a5 5 0 0 1-10 0c0-2 1-3 2-4 .8 1.6 2 2 2 2-1-2 0-5 1-7z"/></svg>
+                  )}
+                </span>
+                <div>
+                  <div class="chef-mood__label">{m.label}</div>
+                  <div class="chef-mood__sub">{m.sub}</div>
+                </div>
+              </button>
+            ))}
+          </div>
+
+          <div class="chef-result" data-chef-result hidden>
+            <div class="chef-result__photo">
+              <img data-chef-photo src="" alt="" loading="lazy"/>
+            </div>
+            <div class="chef-result__body">
+              <span class="text-xs uppercase tracking-[0.18em] text-[var(--season-accent-dark)]">De chef raadt aan</span>
+              <h3 class="chef-result__name" data-chef-name>—</h3>
+              <div class="chef-result__price" data-chef-price>—</div>
+              <p class="chef-result__story" data-chef-story>—</p>
+              <a href="/menukaart" class="btn btn-ghost mt-4 self-start" data-chef-link>
+                Bekijk in menukaart
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M5 12h14"/><path d="m13 6 6 6-6 6"/>
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script is:inline define:vars={{ moods }}>
+      (function () {
+        const buttons = document.querySelectorAll("[data-chef-mood]");
+        const result = document.querySelector("[data-chef-result]");
+        const photo = document.querySelector("[data-chef-photo]");
+        const name = document.querySelector("[data-chef-name]");
+        const price = document.querySelector("[data-chef-price]");
+        const story = document.querySelector("[data-chef-story]");
+
+        buttons.forEach((btn) => {
+          btn.addEventListener("click", () => {
+            const i = parseInt(btn.getAttribute("data-chef-mood") || "0", 10);
+            const m = moods[i];
+            if (!m) return;
+            buttons.forEach((b) =>
+              b.setAttribute("aria-pressed", b === btn ? "true" : "false")
+            );
+            if (photo) {
+              photo.setAttribute("src", m.photo);
+              photo.setAttribute("alt", m.dish);
+            }
+            if (name) name.textContent = m.dish;
+            if (price) price.textContent = m.price;
+            if (story) story.textContent = m.story;
+            if (result) {
+              result.hidden = false;
+              requestAnimationFrame(() => result.classList.add("is-shown"));
+            }
+          });
+        });
+      })();
+    </script>
+  </section>
+
+  <!-- Proefmenu -->
+  <section class="section relative">
+    <div class="strand-rail strand-rail--left"></div>
+    <div class="container grid lg:grid-cols-[1.1fr_1fr] gap-12 items-center" style="position:relative; z-index:2">
+      <div data-reveal>
+        <span class="eyebrow">Proefmenu</span>
+        <h2 class="font-display text-4xl sm:text-5xl mt-3 leading-[1.05]">
+          Drie gangen, &eacute;&eacute;n verhaal.
+        </h2>
+        <p class="mt-5 text-base leading-relaxed text-[rgba(34,23,16,0.78)] max-w-[55ch]">
+          Laat onze keuken bepalen. Het Xuma Proefmenu neemt je mee langs onze huidige favorieten, opgebouwd in drie gangen die in elkaars verlengde liggen.
+        </p>
+        <ul class="mt-6 space-y-3 text-sm">
+          <li class="flex items-baseline gap-3">
+            <span class="font-display text-lg text-[var(--color-copper-dark)]">01</span>
+            <span><strong class="font-medium">Voor.</strong> Carpaccio of tonijn tataki</span>
+          </li>
+          <li class="flex items-baseline gap-3">
+            <span class="font-display text-lg text-[var(--color-copper-dark)]">02</span>
+            <span><strong class="font-medium">Hoofd.</strong> Ossenhaas of kabeljauw</span>
+          </li>
+          <li class="flex items-baseline gap-3">
+            <span class="font-display text-lg text-[var(--color-copper-dark)]">03</span>
+            <span><strong class="font-medium">Dessert.</strong> Dessert Xuma, signature finale</span>
+          </li>
+        </ul>
+        <div class="mt-8 flex flex-wrap items-center gap-5">
+          <div>
+            <div class="text-xs uppercase tracking-[0.18em] text-[var(--color-copper-dark)]">Vanaf</div>
+            <div class="font-display text-4xl">&euro; 59,50</div>
+          </div>
+          <button type="button" class="btn btn-primary" data-zenchef-open>
+            Reserveer een tafel
+          </button>
+        </div>
+      </div>
+      <div class="grid grid-cols-2 gap-3" data-reveal>
+        <div class="grid gap-3">
+          <Photo src="/photos-raw/IMG_7253-min-scaled.webp" alt="Tafel gedekt met wijnglazen" aspect="3 / 4"/>
+          <Photo src="/photos-raw/DSC01018-min-scaled.webp" alt="Detail van interieur met ronde wandlamp" aspect="1 / 1"/>
+        </div>
+        <Photo src="/photos-raw/DSC03555-min-scaled.webp" alt="Oester met yuzu en chili crisps" aspect="3 / 5" class="translate-y-8"/>
+      </div>
+    </div>
+  </section>
+
+  <!-- High tea -->
+  <section class="section bg-[var(--color-cream)]">
+    <div class="container grid lg:grid-cols-[1fr_1.2fr] gap-12 items-center">
+      <div data-reveal>
+        <Photo src="/photos-raw/DSC04233-min-scaled.webp" alt="Gast aan tafel bij Xuma" aspect="4 / 5"/>
+      </div>
+      <div data-reveal>
+        <span class="eyebrow">High tea bij Xuma</span>
+        <h2 class="font-display text-4xl sm:text-5xl mt-3 leading-[1.05]">
+          Een middag aan de Veste.
+        </h2>
+        <p class="mt-5 text-base leading-relaxed text-[rgba(34,23,16,0.78)] max-w-[55ch]">
+          Scones met clotted cream, hartige sandwiches, kleine taartjes, eigen quiches en uiteraard de oesters Xuma Style. Boven of beneden, voor twee of voor acht.
+        </p>
+        <a href="/menukaart#high-tea" class="inline-flex items-center gap-2 mt-7 text-sm font-medium text-[var(--color-copper-dark)] hover:text-[var(--color-copper)]">
+          Bekijk de high tea kaart
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M5 12h14"/><path d="m13 6 6 6-6 6"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Gallery -->
+  <section class="section">
+    <div class="container">
+      <div class="flex items-end justify-between mb-10" data-reveal>
+        <div>
+          <span class="eyebrow">Sfeer</span>
+          <h2 class="font-display text-4xl sm:text-5xl mt-3 leading-[1.05]">Een blik in huis.</h2>
+        </div>
+      </div>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-3" data-reveal>
+        <Photo src="/photos-raw/IMG_7270-min-scaled.webp" alt="Tafelopstelling met gouden zon-wandlampen" aspect="3 / 4"/>
+        <Photo src="/photos-raw/IMG_7124-min-scaled.webp" alt="Veranda met gestreepte banken en macrame" aspect="3 / 4" class="md:translate-y-6"/>
+        <Photo src="/photos-raw/DSC01677-min-scaled.webp" alt="Bediening achter de bar" aspect="3 / 4"/>
+        <Photo src="/photos-raw/IMG_7396-min-scaled.webp" alt="Bar met gin selectie" aspect="3 / 4" class="md:translate-y-6"/>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section bg-[var(--color-ink)] text-[var(--color-bone)] bg-strands bg-strands--light">
+    <div class="container-narrow text-center" data-reveal>
+      <span class="eyebrow text-[var(--color-copper)]">Tot snel aan tafel</span>
+      <h2 class="font-display text-4xl sm:text-5xl mt-3 leading-[1.05]">
+        Reserveer je tafel bij Xuma.
+      </h2>
+      <p class="mt-5 text-[rgba(246,239,227,0.78)] max-w-[52ch] mx-auto">
+        Lunch, diner of high tea. Wij staan dagelijks van 11:00 tot 23:00 voor je klaar.
+      </p>
+      <div class="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
+        <button type="button" class="btn btn-light" data-zenchef-open>Reserveren</button>
+        <a href="tel:0113854494" class="btn btn-ghost" style="color: var(--color-bone); border-color: rgba(246,239,227,0.4);">Bel 0113 85 44 94</a>
+      </div>
+    </div>
+  </section>
+</Base>

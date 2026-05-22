@@ -1,0 +1,306 @@
+---
+import "../styles/global.css";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import ZenchefModal from "../components/ZenchefModal.astro";
+import SeasonBar from "../components/SeasonBar.astro";
+import SeasonSwitch from "../components/SeasonSwitch.astro";
+import Analytics from "@vercel/analytics/astro";
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+const {
+  title = "Xuma Goes | Wereldse smaken aan de Veste",
+  description = "Restaurant Xuma in Goes serveert wereldse smaken op basis van Zeeuwse producten met een creatieve twist. Aan de Dam met uitzicht over de Veste.",
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="nl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#221710" />
+    <link rel="icon" type="image/svg+xml" href="/brand/xuma-mark.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..600,30..100;1,9..144,300..600,30..100&family=Inter:wght@400;500;600&display=swap"
+    />
+
+    <title>{title}</title>
+  </head>
+  <body class="has-intro">
+    <!-- Demo intro splash -->
+    <div id="demo-intro" data-intro class="demo-intro" aria-modal="true" role="dialog">
+      <div class="demo-intro__inner">
+        <p class="demo-intro__eyebrow">Demo &middot; niet de live site</p>
+        <h1 class="demo-intro__title">Welkom bij de Xuma demo.</h1>
+        <p class="demo-intro__body">
+          Een eerste vertaling van het gesprek naar een website. Klein, warm, uitnodigend, met Zenchef die meteen popt zoals jullie nu gewend zijn. De stijl is bedoeld als verlengstuk van wat gasten in het pand zelf voelen.
+        </p>
+        <ul class="demo-intro__notes">
+          <li>Verwerkt uit het gesprek: warme sfeer, prijzen open op de kaart, NL-only, geen review-widgets, Zenchef houden zoals 'ie is.</li>
+          <li>Probeer rechtsonder de seizoens-switcher. Zo zien jullie hoe de site per kwartaal mee beweegt in kleur, hero-tekst en aankondiging.</li>
+          <li>Echt: adres, openingstijden, contactgegevens, concept. Invulling: prijzen, gerechtnamen onder voorbehoud, copy.</li>
+        </ul>
+        <button type="button" data-intro-dismiss class="demo-intro__cta">
+          Bekijk de demo
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M5 12h14"/><path d="m13 6 6 6-6 6"/>
+          </svg>
+        </button>
+        <p class="demo-intro__small">Foto's, correcties of teksten kunnen we doorlopend verwerken. Korte lijnen, snel doorvoeren.</p>
+      </div>
+    </div>
+
+    <div class="site-topbar">
+      <SeasonBar />
+      <Header />
+    </div>
+    <main>
+      <slot />
+    </main>
+    <Footer />
+    <ZenchefModal />
+    <SeasonSwitch />
+    <button type="button" class="sticky-reserve" data-zenchef-open aria-label="Reserveer een tafel">
+      <span class="sticky-reserve__dot" aria-hidden="true"></span>
+      <span>Reserveren</span>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M5 12h14"/><path d="m13 6 6 6-6 6"/>
+      </svg>
+    </button>
+
+    <Analytics />
+
+    <script is:inline>
+      // Seizoen detectie zo vroeg mogelijk om FOUC te voorkomen
+      (function () {
+        const stored = localStorage.getItem("xuma-season");
+        const seasons = ["lente", "zomer", "herfst", "winter"];
+        let season = stored && seasons.indexOf(stored) >= 0 ? stored : null;
+        if (!season) {
+          const m = new Date().getMonth();
+          if (m >= 2 && m <= 4) season = "lente";
+          else if (m >= 5 && m <= 7) season = "zomer";
+          else if (m >= 8 && m <= 10) season = "herfst";
+          else season = "winter";
+        }
+        document.documentElement.setAttribute("data-season", season);
+      })();
+    </script>
+
+    <script>
+      type Season = "lente" | "zomer" | "herfst" | "winter";
+      const SEASON_LABELS: Record<Season, string> = {
+        lente: "Lente",
+        zomer: "Zomer",
+        herfst: "Herfst",
+        winter: "Winter",
+      };
+
+      // Demo intro dismiss
+      const intro = document.querySelector<HTMLElement>("[data-intro]");
+      const introBtn = document.querySelector<HTMLButtonElement>("[data-intro-dismiss]");
+      let introDismissed = sessionStorage.getItem("xuma-intro-dismissed") === "1";
+      if (intro && introBtn) {
+        if (introDismissed) {
+          intro.remove();
+          document.body.classList.remove("has-intro");
+        } else {
+          document.body.style.overflow = "hidden";
+          introBtn.addEventListener("click", () => {
+            intro.classList.add("is-leaving");
+            document.body.style.overflow = "";
+            sessionStorage.setItem("xuma-intro-dismissed", "1");
+            introDismissed = true;
+            setTimeout(() => {
+              intro.remove();
+              document.body.classList.remove("has-intro");
+              maybeAutoOpenZenchef();
+            }, 500);
+          });
+        }
+      }
+
+      // Reveal on scroll
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("is-visible");
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.12, rootMargin: "0px 0px -60px 0px" }
+      );
+      document.querySelectorAll("[data-reveal]").forEach((el) => observer.observe(el));
+
+      // Header shadow on scroll
+      const header = document.querySelector<HTMLElement>("[data-header]");
+      if (header) {
+        const onScroll = () => header.classList.toggle("is-scrolled", window.scrollY > 8);
+        onScroll();
+        window.addEventListener("scroll", onScroll, { passive: true });
+      }
+
+      // Topbar hoogte exposeren als CSS var voor sticky elementen eronder
+      const topbar = document.querySelector<HTMLElement>(".site-topbar");
+      const updateTopbarH = () => {
+        if (!topbar) return;
+        const h = Math.ceil(topbar.getBoundingClientRect().height);
+        document.documentElement.style.setProperty("--topbar-h", `${h}px`);
+      };
+      updateTopbarH();
+      window.addEventListener("resize", updateTopbarH);
+      if (topbar && "ResizeObserver" in window) {
+        new ResizeObserver(updateTopbarH).observe(topbar);
+      }
+
+      // Mobile nav toggle
+      const navToggles = document.querySelectorAll<HTMLButtonElement>("[data-nav-toggle]");
+      const navPanel = document.querySelector<HTMLElement>("[data-nav-panel]");
+      if (navToggles.length && navPanel) {
+        navToggles.forEach((btn) =>
+          btn.addEventListener("click", () => {
+            const open = navPanel.classList.toggle("is-open");
+            navToggles.forEach((b) => b.setAttribute("aria-expanded", String(open)));
+            document.body.style.overflow = open ? "hidden" : "";
+          })
+        );
+        navPanel.querySelectorAll("a").forEach((a) =>
+          a.addEventListener("click", () => {
+            navPanel.classList.remove("is-open");
+            navToggles.forEach((b) => b.setAttribute("aria-expanded", "false"));
+            document.body.style.overflow = "";
+          })
+        );
+      }
+
+      // Zenchef modal
+      const zcOverlay = document.querySelector<HTMLElement>("[data-zenchef-overlay]");
+      const zcOpenButtons = document.querySelectorAll<HTMLButtonElement>("[data-zenchef-open]");
+      const zcCloseButtons = document.querySelectorAll<HTMLButtonElement>("[data-zenchef-close]");
+      const openModal = () => {
+        if (!zcOverlay) return;
+        zcOverlay.hidden = false;
+        requestAnimationFrame(() =>
+          requestAnimationFrame(() => zcOverlay.classList.add("is-open"))
+        );
+        document.body.style.overflow = "hidden";
+      };
+      const closeModal = () => {
+        if (!zcOverlay) return;
+        zcOverlay.classList.remove("is-open");
+        document.body.style.overflow = "";
+        sessionStorage.setItem("xuma-zenchef-seen", "1");
+        setTimeout(() => {
+          if (zcOverlay && !zcOverlay.classList.contains("is-open")) {
+            zcOverlay.hidden = true;
+          }
+        }, 260);
+      };
+      zcOpenButtons.forEach((b) =>
+        b.addEventListener("click", () => {
+          sessionStorage.setItem("xuma-zenchef-seen", "1");
+          openModal();
+        })
+      );
+      zcCloseButtons.forEach((b) => b.addEventListener("click", closeModal));
+      if (zcOverlay) {
+        zcOverlay.addEventListener("click", (e) => {
+          if (e.target === zcOverlay) closeModal();
+        });
+        document.addEventListener("keydown", (e) => {
+          if (e.key === "Escape" && zcOverlay.classList.contains("is-open")) closeModal();
+        });
+      }
+
+      // Auto-pop Zenchef na intro-dismiss (zoals op live site)
+      function maybeAutoOpenZenchef() {
+        if (sessionStorage.getItem("xuma-zenchef-seen") === "1") return;
+        if (!zcOverlay) return;
+        setTimeout(() => {
+          if (sessionStorage.getItem("xuma-zenchef-seen") !== "1") {
+            openModal();
+          }
+        }, 1500);
+      }
+      if (introDismissed) {
+        // Intro was al gesloten in een eerdere paginahit, geen auto-pop
+      }
+
+      // Aankondigingsbalk dismiss
+      const seasonBar = document.querySelector<HTMLElement>("[data-season-bar]");
+      const seasonBarClose = document.querySelector<HTMLButtonElement>("[data-season-bar-close]");
+      if (seasonBar && seasonBarClose) {
+        if (sessionStorage.getItem("xuma-season-bar-dismissed") === "1") {
+          seasonBar.classList.add("is-hidden");
+        }
+        seasonBarClose.addEventListener("click", () => {
+          seasonBar.classList.add("is-hidden");
+          sessionStorage.setItem("xuma-season-bar-dismissed", "1");
+        });
+      }
+
+      // Seizoens-switcher
+      const switchEl = document.querySelector<HTMLElement>("[data-season-switch]");
+      const switchToggle = document.querySelector<HTMLButtonElement>("[data-season-switch-toggle]");
+      const switchCurrent = document.querySelector<HTMLElement>("[data-season-switch-current]");
+      const switchOptions = document.querySelectorAll<HTMLButtonElement>("[data-season-option]");
+
+      const isSeason = (v: string | null): v is Season =>
+        v === "lente" || v === "zomer" || v === "herfst" || v === "winter";
+
+      const setSeason = (s: Season) => {
+        document.documentElement.setAttribute("data-season", s);
+        localStorage.setItem("xuma-season", s);
+        if (switchCurrent) switchCurrent.textContent = SEASON_LABELS[s].toLowerCase();
+        switchOptions.forEach((opt) => {
+          opt.setAttribute("aria-current", opt.dataset.seasonOption === s ? "true" : "false");
+        });
+        // Toon banner weer als seizoen actief gewijzigd wordt
+        if (seasonBar) {
+          seasonBar.classList.remove("is-hidden");
+          sessionStorage.removeItem("xuma-season-bar-dismissed");
+        }
+      };
+
+      const initial = document.documentElement.getAttribute("data-season");
+      if (isSeason(initial)) {
+        if (switchCurrent) switchCurrent.textContent = SEASON_LABELS[initial].toLowerCase();
+        switchOptions.forEach((opt) => {
+          opt.setAttribute("aria-current", opt.dataset.seasonOption === initial ? "true" : "false");
+        });
+      }
+
+      if (switchEl && switchToggle) {
+        switchToggle.addEventListener("click", (e) => {
+          e.stopPropagation();
+          const open = switchEl.classList.toggle("is-open");
+          switchToggle.setAttribute("aria-expanded", String(open));
+        });
+        document.addEventListener("click", (e) => {
+          if (!switchEl.contains(e.target as Node)) {
+            switchEl.classList.remove("is-open");
+            switchToggle.setAttribute("aria-expanded", "false");
+          }
+        });
+      }
+      switchOptions.forEach((opt) => {
+        opt.addEventListener("click", () => {
+          const v = opt.dataset.seasonOption;
+          if (isSeason(v ?? null)) setSeason(v as Season);
+          switchEl?.classList.remove("is-open");
+          switchToggle?.setAttribute("aria-expanded", "false");
+        });
+      });
+    </script>
+  </body>
+</html>

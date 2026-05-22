@@ -1,0 +1,26 @@
+---
+const seasons = [
+  { id: "lente", label: "Lente" },
+  { id: "zomer", label: "Zomer" },
+  { id: "herfst", label: "Herfst" },
+  { id: "winter", label: "Winter" },
+];
+---
+
+<div class="season-switch" data-season-switch>
+  <button type="button" class="season-switch__toggle" data-season-switch-toggle aria-expanded="false" aria-controls="season-panel">
+    <span class="season-switch__dot" aria-hidden="true"></span>
+    <span>Demo: <span data-season-switch-current>seizoen</span></span>
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="m6 9 6 6 6-6"/>
+    </svg>
+  </button>
+
+  <div class="season-switch__panel" id="season-panel" role="dialog" aria-label="Seizoen wisselen">
+    <div class="season-switch__label">Demo: seizoen wisselen</div>
+    {seasons.map((s) => (
+      <button type="button" class="season-switch__option" data-season-option={s.id}>{s.label}</button>
+    ))}
+    <p class="season-switch__hint">Zo bewegen kleur, hero-tekst en aankondiging mee met het seizoen. Per kwartaal aan te passen via Agensea.</p>
+  </div>
+</div>

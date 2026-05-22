@@ -1,0 +1,69 @@
+---
+const path = Astro.url.pathname.replace(/\/$/, "") || "/";
+const items = [
+  { href: "/", label: "Home" },
+  { href: "/menukaart", label: "Menukaart" },
+  { href: "/drankenkaart", label: "Drankenkaart" },
+  { href: "/over-xuma", label: "Over Xuma" },
+];
+const isCurrent = (href: string) => (href === "/" ? path === "/" : path.startsWith(href));
+---
+
+<header class="site-header" data-header>
+  <div class="site-header__pill">
+    <a href="/" class="site-header__logo" aria-label="Xuma Goes">
+      <img src="/brand/xuma-logo-balanced.png" alt="Xuma · Lunch, diner & drinks" />
+    </a>
+
+    <nav class="hidden md:flex items-center gap-7" aria-label="Hoofdmenu">
+      {
+        items.map((item) => (
+          <a
+            href={item.href}
+            class="nav-link"
+            aria-current={isCurrent(item.href) ? "page" : undefined}
+          >
+            {item.label}
+          </a>
+        ))
+      }
+      <button type="button" class="btn btn-primary" data-zenchef-open>
+        Reserveren
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M5 12h14"/><path d="m13 6 6 6-6 6"/>
+        </svg>
+      </button>
+    </nav>
+
+    <button
+      type="button"
+      class="md:hidden inline-flex items-center justify-center w-10 h-10 rounded-full border border-[var(--color-line)]"
+      aria-label="Open menu"
+      aria-expanded="false"
+      data-nav-toggle
+    >
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <line x1="4" y1="8" x2="20" y2="8"/>
+        <line x1="4" y1="16" x2="20" y2="16"/>
+      </svg>
+    </button>
+  </div>
+</header>
+
+<aside class="nav-panel" data-nav-panel aria-label="Mobiel menu">
+  <button
+    type="button"
+    class="absolute top-4 right-4 inline-flex items-center justify-center w-10 h-10 rounded-full border border-[var(--color-line)]"
+    aria-label="Sluit menu"
+    data-nav-toggle
+  >
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <line x1="6" y1="6" x2="18" y2="18"/>
+      <line x1="6" y1="18" x2="18" y2="6"/>
+    </svg>
+  </button>
+  {items.map((item) => <a href={item.href}>{item.label}</a>)}
+  <button type="button" class="btn btn-primary mt-6 self-start" data-zenchef-open>
+    Reserveren
+  </button>
+</aside>

@@ -1,0 +1,57 @@
+---
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="container grid gap-12 md:grid-cols-[1.3fr_1fr_1fr_1fr]">
+    <div>
+      <img src="/brand/xuma-wordmark.png" alt="Xuma" class="h-10 mb-5" style="filter: brightness(0) invert(1); opacity: 0.92;"/>
+      <p class="text-sm leading-relaxed text-[rgba(246,239,227,0.7)] max-w-[36ch]">
+        Wereldse smaken, Zeeuwse producten en een creatieve twist. Aan de Dam in Goes, met uitzicht over de Veste.
+      </p>
+    </div>
+
+    <div>
+      <div class="text-xs uppercase tracking-[0.18em] text-[var(--color-copper)] mb-3">Bezoek</div>
+      <address class="not-italic text-sm leading-relaxed text-[rgba(246,239,227,0.78)]">
+        Dam 2<br/>
+        4461 HV Goes
+      </address>
+    </div>
+
+    <div>
+      <div class="text-xs uppercase tracking-[0.18em] text-[var(--color-copper)] mb-3">Contact</div>
+      <ul class="space-y-1.5 text-sm">
+        <li><a href="tel:0113854494">0113 85 44 94</a></li>
+        <li><a href="mailto:info@xumagoes.nl">info@xumagoes.nl</a></li>
+        <li><a href="/reserveren">Reserveren</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <div class="text-xs uppercase tracking-[0.18em] text-[var(--color-copper)] mb-3">Openingstijden</div>
+      <ul class="space-y-1 text-sm text-[rgba(246,239,227,0.78)]">
+        <li>Maandag t/m zondag</li>
+        <li>11:00 tot 23:00</li>
+      </ul>
+      <div class="mt-5 flex gap-3">
+        <a href="https://www.instagram.com/xuma.goes" aria-label="Instagram" target="_blank" rel="noopener">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+        </a>
+        <a href="https://www.facebook.com" aria-label="Facebook" target="_blank" rel="noopener">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+        </a>
+        <a href="https://www.tiktok.com/@xuma.goes" aria-label="TikTok" target="_blank" rel="noopener">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M16 3v3a4 4 0 0 0 4 4M16 3v11.5a4.5 4.5 0 1 1-4.5-4.5h.5"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="container mt-14 pt-6 border-t border-[rgba(246,239,227,0.12)] flex flex-col md:flex-row gap-3 md:items-center md:justify-between text-xs text-[rgba(246,239,227,0.5)]">
+    <div>&copy; {year} Xuma Restaurant Goes. Alle rechten voorbehouden.</div>
+    <div>
+      Demo door <a href="https://agensea.nl" target="_blank" rel="noopener" class="underline-offset-2 hover:underline">Agensea</a>
+    </div>
+  </div>
+</footer>

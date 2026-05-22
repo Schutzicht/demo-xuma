@@ -1,0 +1,9 @@
+node_modules
+dist
+.astro
+.env
+.env.production
+.DS_Store
+
+# Vertrouwelijk meeting-transcript Xuma (niet publiekelijk delen)
+public/Kennismaking Xuma.md

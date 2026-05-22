@@ -1,0 +1,88 @@
+---
+import Base from "../layouts/Base.astro";
+import Photo from "../components/Photo.astro";
+---
+
+<Base title="Reserveren | Xuma Goes" description="Reserveer een tafel bij Xuma Goes. Lunch, diner, high tea en groepsreserveringen.">
+  <section class="page-hero">
+    <div class="absolute inset-0">
+      <img src="/photos-raw/IMG_7270-min-scaled.webp" alt="" class="w-full h-full object-cover opacity-30"/>
+      <div class="absolute inset-0 bg-gradient-to-r from-[var(--color-mocha)]/85 via-[var(--color-mocha)]/55 to-transparent"></div>
+    </div>
+    <div class="strand-rail strand-rail--right strand-rail--light"></div>
+    <div class="container relative" data-reveal style="z-index:2">
+      <span class="eyebrow text-[var(--color-copper)]">Reserveren</span>
+      <h1 class="mt-3">Tafel bij Xuma.</h1>
+      <p>Boek live via onze reserveringspartner. Voor vragen, groepen of high tea kan dat ook direct bij ons.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container grid lg:grid-cols-[1.1fr_1fr] gap-12 items-start">
+      <div data-reveal>
+        <div class="rounded-xl border border-[var(--color-line)] bg-white/40 p-7 sm:p-9">
+          <span class="zc-tag">Zenchef</span>
+          <h2 class="font-display text-3xl sm:text-4xl mt-3 leading-tight">Direct online reserveren.</h2>
+          <p class="mt-3 text-sm text-[rgba(34,23,16,0.7)] max-w-[52ch]">
+            Wij gebruiken Zenchef voor live beschikbaarheid en directe bevestiging. Klik op de knop om het reserveringsvenster te openen.
+          </p>
+
+          <div class="zc-placeholder" aria-hidden="true">
+            <div class="text-[0.65rem] uppercase tracking-[0.18em] text-[var(--color-copper-dark)] mb-2">Voorbeeld weergave</div>
+            <div class="zc-row-3">
+              <input class="zc-input" type="text" value="Vr 18 dec" readonly aria-label="Datum"/>
+              <input class="zc-input" type="text" value="19:00" readonly aria-label="Tijd"/>
+              <input class="zc-input" type="text" value="2 pers" readonly aria-label="Personen"/>
+            </div>
+            <p class="text-[0.72rem] text-[rgba(34,23,16,0.55)] mt-3">
+              In de demo opent een placeholder. Zodra de Zenchef-koppeling actief is, zie je hier de live agenda.
+            </p>
+          </div>
+
+          <button type="button" class="btn btn-primary w-full justify-center" data-zenchef-open>
+            Open reserveringsvenster
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M5 12h14"/><path d="m13 6 6 6-6 6"/>
+            </svg>
+          </button>
+        </div>
+
+        <div class="mt-10 grid sm:grid-cols-2 gap-6 text-sm">
+          <div class="border-t border-[var(--color-line)] pt-5">
+            <div class="text-xs uppercase tracking-[0.18em] text-[var(--color-copper-dark)] mb-2">Bellen</div>
+            <a href="tel:0113854494" class="font-display text-xl">0113 85 44 94</a>
+            <p class="text-xs text-[rgba(34,23,16,0.6)] mt-1">Dagelijks tussen 11:00 en 22:00</p>
+          </div>
+          <div class="border-t border-[var(--color-line)] pt-5">
+            <div class="text-xs uppercase tracking-[0.18em] text-[var(--color-copper-dark)] mb-2">Mailen</div>
+            <a href="mailto:info@xumagoes.nl" class="font-display text-xl break-all">info@xumagoes.nl</a>
+            <p class="text-xs text-[rgba(34,23,16,0.6)] mt-1">Antwoord binnen 24 uur</p>
+          </div>
+        </div>
+      </div>
+
+      <aside class="grid gap-6" data-reveal>
+        <Photo src="/photos-raw/DSC01206-min-scaled.webp" alt="Terras aan de Veste" aspect="4 / 3"/>
+
+        <div class="border border-[var(--color-line)] rounded-xl p-6 bg-white/40">
+          <div class="text-xs uppercase tracking-[0.18em] text-[var(--color-copper-dark)] mb-3">Goed om te weten</div>
+          <ul class="space-y-3 text-sm leading-relaxed text-[rgba(34,23,16,0.78)]">
+            <li><strong class="font-medium">Groepen vanaf 8 personen.</strong> Neem contact op voor een arrangement of groepsmenu.</li>
+            <li><strong class="font-medium">High tea.</strong> Reserveren minimaal 24 uur vooraf, dagelijks vanaf 14:00.</li>
+            <li><strong class="font-medium">Dieetwensen.</strong> Geef ze door bij de reservering, dan houden we er rekening mee.</li>
+            <li><strong class="font-medium">Honden.</strong> Welkom op het terras, na overleg ook binnen.</li>
+            <li><strong class="font-medium">No-show.</strong> We houden je tafel maximaal 15 minuten vrij.</li>
+          </ul>
+        </div>
+
+        <div class="border border-[var(--color-line)] rounded-xl p-6 bg-[var(--color-cream)]">
+          <div class="text-xs uppercase tracking-[0.18em] text-[var(--color-copper-dark)] mb-2">Bezoekadres</div>
+          <address class="not-italic">
+            Dam 2<br/>
+            4461 HV Goes
+          </address>
+        </div>
+      </aside>
+    </div>
+  </section>
+</Base>

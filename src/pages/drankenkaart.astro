@@ -1,0 +1,127 @@
+---
+import Base from "../layouts/Base.astro";
+import Photo from "../components/Photo.astro";
+
+const bubbels = [
+  { name: "Prosecco Brut", desc: "Veneto, fris en bloemig. Glas / fles", price: "7,50 / 39,50" },
+  { name: "Champagne Pierre Mignon", desc: "Brut Grande Réserve. Per fles", price: "79,00" },
+  { name: "Crémant de Loire", desc: "Rosé, framboos en handperzik. Per glas", price: "8,50" },
+];
+
+const wit = [
+  { name: "Vermentino", desc: "Toscane, citrus en bittere amandel", price: "6,50 / 32,50" },
+  { name: "Albariño", desc: "Rías Baixas, mineraal en jodium", price: "7,50 / 36,50" },
+  { name: "Chardonnay barrique", desc: "Bourgogne, vanille en geroosterde noten", price: "8,50 / 42,50" },
+];
+
+const rood = [
+  { name: "Tempranillo Crianza", desc: "Rioja, kers en cederhout", price: "6,50 / 32,50" },
+  { name: "Pinot Noir", desc: "Marlborough, sappig en lichtvoetig", price: "8,50 / 42,50" },
+  { name: "Malbec Reserva", desc: "Mendoza, donker fruit en mokka", price: "7,50 / 38,50" },
+];
+
+const signature = [
+  { name: "Xuma Spritz", desc: "Yuzu, prosecco, soda, kombucha", price: "12,50" },
+  { name: "Zeeuwse Old Fashioned", desc: "Bourbon, duindoorn, suiker, rooksessie", price: "13,50" },
+  { name: "Negroni di Goes", desc: "Gin Babbel, campari, rosso vermouth", price: "12,50" },
+  { name: "Smoked Margarita", desc: "Mezcal, agave, limoen, sintel-rand", price: "13,50" },
+];
+
+const gin = [
+  { name: "Babbel Gin", desc: "Zeeuwse gin met lokale botanicals, tonic naar keuze", price: "11,50" },
+  { name: "Monkey 47", desc: "Schwarzwald, 47 botanicals", price: "12,50" },
+  { name: "Roku Japanese Gin", desc: "Sakura, yuzu, sansho", price: "12,50" },
+];
+
+const bier = [
+  { name: "Vechtdal Pils", desc: "Tap, helder en droog", price: "4,50" },
+  { name: "Emelisse White Label", desc: "Wisselend speciaalbier op fles", price: "7,50" },
+  { name: "Brouwerij Vandeoirsprong Blond", desc: "Zeeuws, citrus en kruidnagel", price: "6,50" },
+  { name: "0.0", desc: "Lazy Bear Brewing alcoholvrij", price: "4,50" },
+];
+
+const koffieThee = [
+  { name: "Espresso", desc: "Single origin, light roast", price: "3,00" },
+  { name: "Flat white", desc: "Met dubbele ristretto", price: "4,00" },
+  { name: "Matcha latte", desc: "Ceremonial grade, gezeefde matcha", price: "4,50" },
+  { name: "Verse muntthee", desc: "Met honing en gember", price: "3,80" },
+];
+
+interface DrinkSection { id: string; title: string; sub?: string; items: { name: string; desc: string; price: string }[]; }
+
+const sections: DrinkSection[] = [
+  { id: "signature", title: "Signature cocktails", sub: "Door onze bartenders", items: signature },
+  { id: "bubbels", title: "Bubbels", items: bubbels },
+  { id: "wit", title: "Witte wijn", sub: "Glas / fles", items: wit },
+  { id: "rood", title: "Rode wijn", sub: "Glas / fles", items: rood },
+  { id: "gin", title: "Gin & tonic", items: gin },
+  { id: "bier", title: "Bier", items: bier },
+  { id: "koffie", title: "Koffie & thee", items: koffieThee },
+];
+---
+
+<Base title="Drankenkaart | Xuma Goes" description="Cocktails, wijnen, gin, bier, koffie en thee bij Xuma in Goes.">
+  <section class="page-hero">
+    <div class="absolute inset-0">
+      <img src="/photos-raw/IMG_7396-min-scaled.webp" alt="" class="w-full h-full object-cover opacity-30"/>
+      <div class="absolute inset-0 bg-gradient-to-r from-[var(--color-mocha)]/85 via-[var(--color-mocha)]/55 to-transparent"></div>
+    </div>
+    <div class="strand-rail strand-rail--right strand-rail--light"></div>
+    <div class="container relative" data-reveal style="z-index:2">
+      <span class="eyebrow text-[var(--color-copper)]">Drankenkaart</span>
+      <h1 class="mt-3">Op de bar.</h1>
+      <p>Signature cocktails met Zeeuws toetsen, een korte maar precieze wijnselectie en koffie van een Zeeuwse brander.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <nav aria-label="Snel naar" class="flex flex-wrap gap-2 mb-12" data-reveal>
+        {sections.map((s) => (
+          <a href={`#${s.id}`} class="btn btn-ghost text-xs px-4 py-2">{s.title}</a>
+        ))}
+      </nav>
+
+      {sections.map((s, idx) => (
+        <article id={s.id} class="scroll-mt-24 mb-16 last:mb-0" data-reveal>
+          <header class="flex flex-col md:flex-row md:items-end md:justify-between gap-2 mb-6 pb-4 border-b border-[var(--color-line)]">
+            <div>
+              <span class="eyebrow">Sectie {String(idx + 1).padStart(2, "0")}</span>
+              <h2 class="font-display text-3xl sm:text-4xl mt-2 leading-tight">{s.title}</h2>
+            </div>
+            {s.sub && <div class="text-sm text-[rgba(34,23,16,0.6)]">{s.sub}</div>}
+          </header>
+          <div class="grid md:grid-cols-2 gap-x-12 gap-y-1">
+            {s.items.map((d) => (
+              <div class="menu-item">
+                <div>
+                  <div class="menu-item__name">{d.name}</div>
+                  <div class="menu-item__desc">{d.desc}</div>
+                </div>
+                <div class="menu-item__price">&euro; {d.price}</div>
+              </div>
+            ))}
+          </div>
+        </article>
+      ))}
+
+      <aside class="mt-20 grid md:grid-cols-2 gap-3" data-reveal>
+        <Photo src="/photos-raw/IMG_7396-min-scaled.webp" alt="Bar van Xuma met gin selectie" aspect="4 / 3"/>
+        <Photo src="/photos-raw/DSC01677-min-scaled.webp" alt="Bediening achter de bar" aspect="4 / 3"/>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section bg-[var(--color-cream)] bg-strands relative">
+    <div class="container-narrow text-center" data-reveal>
+      <span class="eyebrow">Borrel bij Xuma</span>
+      <h2 class="font-display text-4xl sm:text-5xl mt-3 leading-[1.05]">Vrijdagmiddag aan de bar.</h2>
+      <p class="mt-5 text-[rgba(34,23,16,0.7)] max-w-[52ch] mx-auto">
+        Tussen 16:00 en 18:00 schenken we onze signature cocktails voor een vriendelijkere prijs. Wisselende bar bites uit de keuken.
+      </p>
+      <div class="mt-8">
+        <button type="button" class="btn btn-primary" data-zenchef-open>Tafel reserveren</button>
+      </div>
+    </div>
+  </section>
+</Base>

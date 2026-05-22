@@ -1,0 +1,168 @@
+---
+import Base from "../layouts/Base.astro";
+import Photo from "../components/Photo.astro";
+
+const principes = [
+  {
+    letter: "x",
+    word: "Kruising",
+    title: "Wereld als inspiratie",
+    body: "Onze chefs reizen, proeven en brengen mee. Een Koreaanse marinade, een Italiaanse techniek, een Mexicaanse rookmethode. Niet als bevliegen, maar omdat het iets toevoegt.",
+  },
+  {
+    letter: "u",
+    word: "Uitnodigend",
+    title: "Beleving boven alles",
+    body: "Een avond bij Xuma is meer dan eten. Het pand, de bediening, het uitzicht en het tempo doen mee. Daar selecteren wij ons team op.",
+  },
+  {
+    letter: "m",
+    word: "Meesterschap",
+    title: "Contrast op het bord",
+    body: "Knapperig naast romig, fris tegenover pittig, zacht tegen geblakerd. Texturen vertellen het verhaal zodra de smaken zich aan elkaar voorstellen.",
+  },
+  {
+    letter: "a",
+    word: "Aandacht",
+    title: "Lokaal als basis",
+    body: "Wij werken met Zeeuwse producten waar het kan. Vis van de afslag in Yerseke, oesters uit de Oosterschelde, groenten van telers uit het achterland. Wat hier groeit, vormt het uitgangspunt.",
+  },
+];
+---
+
+<Base title="Over Xuma | Wereldse smaken in een Zeeuwse smederij" description="Ons verhaal: hoe Xuma ontstond uit een historisch smederij-pand aan de Veste in Goes en wat we belangrijk vinden.">
+  <section class="page-hero">
+    <div class="absolute inset-0">
+      <img src="/photos-raw/DSC01206-min-scaled.webp" alt="" class="w-full h-full object-cover opacity-40"/>
+      <div class="absolute inset-0 bg-gradient-to-r from-[var(--color-mocha)]/80 via-[var(--color-mocha)]/55 to-transparent"></div>
+    </div>
+    <div class="strand-rail strand-rail--right strand-rail--light"></div>
+    <div class="container relative" data-reveal style="z-index:2">
+      <span class="eyebrow text-[var(--color-copper)]">Over Xuma</span>
+      <h1 class="mt-3">Een oude smederij aan de Veste.</h1>
+      <p>Wat ooit een werkplaats was waar paardenhoeven werden beslagen, is nu een plek waar gasten elkaar treffen aan de waterkant. Het pand stuurde de keuze van het concept.</p>
+    </div>
+  </section>
+
+  <!-- Verhaal -->
+  <section class="section relative">
+    <div class="strand-rail strand-rail--left"></div>
+    <div class="container grid lg:grid-cols-[1fr_1.1fr] gap-14 items-center" style="position:relative; z-index:2">
+      <div data-reveal>
+        <Photo src="/photos-raw/IMG_7122V2-min-scaled.webp" alt="Sfeervol Xuma interieur" aspect="4 / 5"/>
+      </div>
+      <div data-reveal>
+        <span class="eyebrow">Het verhaal</span>
+        <h2 class="font-display text-4xl sm:text-5xl mt-3 leading-[1.05]">Waarom Xuma bestaat.</h2>
+        <p class="mt-5 text-base leading-relaxed text-[rgba(34,23,16,0.78)] max-w-[58ch]">
+          Goes is een stad die zich niet meteen prijsgeeft. De bezoeker komt eerst in de Lange Vorststraat, maar het echte verhaal speelt zich af aan het water. Vanuit dat besef ontstond Xuma. Geen restaurant dat zich voegt naar wat al bestaat, maar een eigen taal in een pand dat dat verdient.
+        </p>
+        <p class="mt-4 text-base leading-relaxed text-[rgba(34,23,16,0.78)] max-w-[58ch]">
+          De voormalige smederij is grondig herzien zonder zijn karakter te verliezen. Robuust metaal vermengt zich met handgeweven textiel, geblakerd hout met zacht licht. Het uitzicht over de Veste doet de rest.
+        </p>
+        <div class="mt-7 grid grid-cols-3 gap-4 max-w-[480px]">
+          <div class="border-t border-[var(--color-line)] pt-3">
+            <div class="font-display text-3xl">2022</div>
+            <p class="text-xs text-[rgba(34,23,16,0.6)] mt-1">Eerste service</p>
+          </div>
+          <div class="border-t border-[var(--color-line)] pt-3">
+            <div class="font-display text-3xl">80</div>
+            <p class="text-xs text-[rgba(34,23,16,0.6)] mt-1">Couverts binnen</p>
+          </div>
+          <div class="border-t border-[var(--color-line)] pt-3">
+            <div class="font-display text-3xl">40</div>
+            <p class="text-xs text-[rgba(34,23,16,0.6)] mt-1">Op het terras</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Principes -->
+  <section class="section bg-[var(--color-cream)]">
+    <div class="container">
+      <div class="max-w-[55ch] mb-12" data-reveal>
+        <span class="eyebrow">Onze principes</span>
+        <h2 class="font-display text-4xl sm:text-5xl mt-3 leading-[1.05]">
+          Vier letters, vier waarden.
+        </h2>
+        <p class="mt-4 text-base leading-relaxed text-[rgba(34,23,16,0.7)]">
+          De naam Xuma staat voor meer dan een woordmerk. Elke letter draagt een principe waar we ons aan vasthouden.
+        </p>
+      </div>
+      <div class="grid md:grid-cols-2 gap-x-12 gap-y-10" data-reveal>
+        {principes.map((p) => (
+          <div class="border-t border-[var(--color-line)] pt-6">
+            <img src={`/brand/letter-${p.letter}.png`} alt={p.letter.toUpperCase()} class="letter-glyph"/>
+            <div class="text-xs uppercase tracking-[0.18em] text-[var(--season-accent-dark)] mt-2">{p.word}</div>
+            <h3 class="font-display text-2xl mt-1 mb-3">{p.title}</h3>
+            <p class="text-sm leading-relaxed text-[rgba(34,23,16,0.7)]">{p.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Het pand -->
+  <section class="section">
+    <div class="container">
+      <div class="pand-grid" data-reveal>
+        <Photo src="/photos-raw/IMG_7270-min-scaled.webp" alt="Restaurant interieur met gouden wandlampen" aspect="4 / 5" class="pand-photo-main"/>
+
+        <article class="pand-text">
+          <span class="eyebrow">Het pand</span>
+          <h2 class="font-display text-3xl sm:text-4xl mt-3 leading-[1.05]">
+            Een werkplaats die nu mensen samenbrengt.
+          </h2>
+          <p class="mt-5 text-base leading-relaxed text-[rgba(34,23,16,0.78)]">
+            De aanslag van een eeuwen oude smederij is bewaard in de details. Tegels die het roet kennen. Balken die zich niet laten wegpoetsen. Daaroverheen is een laag gelegd die past bij wat nu uit de keuken komt.
+          </p>
+          <div class="mt-6 flex items-center gap-3 text-xs uppercase tracking-[0.18em] text-[rgba(34,23,16,0.5)]">
+            <span class="font-display text-base normal-case tracking-normal text-[var(--season-accent-dark)]">Dam 2</span>
+            <span class="w-6 h-px bg-[var(--color-line)]"></span>
+            <span>Goes, aan de Veste</span>
+          </div>
+        </article>
+
+        <Photo src="/photos-raw/DSC01018-min-scaled.webp" alt="Detail van wandlamp en boucle stoel" aspect="auto" class="pand-photo-side"/>
+      </div>
+
+      <Photo src="/photos-raw/IMG_7124-min-scaled.webp" alt="Veranda met gestreepte banken aan de Veste" aspect="21 / 8" class="pand-wide"/>
+    </div>
+  </section>
+
+  <!-- Locatie -->
+  <section class="section bg-[var(--color-ink)] text-[var(--color-bone)] bg-strands bg-strands--light">
+    <div class="container grid lg:grid-cols-2 gap-10 lg:gap-12 items-start">
+      <div data-reveal>
+        <span class="eyebrow text-[var(--color-copper)]">Hier vind je ons</span>
+        <h2 class="font-display text-4xl sm:text-5xl mt-3 leading-[1.05]">Aan de Dam, met uitzicht over de Veste.</h2>
+        <address class="not-italic mt-6 text-[rgba(246,239,227,0.78)] leading-relaxed">
+          Dam 2<br/>
+          4461 HV Goes<br/>
+          <a href="tel:0113854494" class="hover:text-[var(--color-copper)]">0113 85 44 94</a><br/>
+          <a href="mailto:info@xumagoes.nl" class="hover:text-[var(--color-copper)]">info@xumagoes.nl</a>
+        </address>
+        <div class="mt-6">
+          <div class="text-xs uppercase tracking-[0.18em] text-[var(--color-copper)] mb-1.5">Openingstijden</div>
+          <p class="text-[rgba(246,239,227,0.78)]">Maandag t/m zondag · 11:00 tot 23:00</p>
+        </div>
+        <div class="mt-8 flex flex-col sm:flex-row gap-3">
+          <button type="button" class="btn btn-light" data-zenchef-open>Reserveren</button>
+          <a href="https://www.google.com/maps/?q=Dam+2,+Goes" target="_blank" rel="noopener" class="btn btn-ghost" style="color: var(--color-bone); border-color: rgba(246,239,227,0.4);">Routebeschrijving</a>
+        </div>
+      </div>
+      <div data-reveal class="w-full">
+        <div class="map-frame">
+          <iframe
+            src="https://www.google.com/maps?q=Dam+2,+4461+HV+Goes,+Nederland&z=16&output=embed"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            title="Locatie Xuma op de kaart"
+            allowfullscreen
+          ></iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>

@@ -1,0 +1,276 @@
+---
+import Base from "../layouts/Base.astro";
+
+interface Dish {
+  cat: string;
+  name: string;
+  desc: string;
+  price: string;
+  tags: string[];
+}
+
+const dishes: Dish[] = [
+  // Lunch
+  { cat: "lunch", name: "Klassieke Caesar salade", desc: "Gegrilde kipdijfilet, ansjovis-dressing, croutons, parmezaan", price: "16,50", tags: ["kip"] },
+  { cat: "lunch", name: "Gegrilde geitenkaas salade", desc: "Geitenkaas, granaatappel, walnoten, honing-mosterddressing", price: "17,50", tags: ["vegetarisch"] },
+  { cat: "lunch", name: "Open steak sandwich", desc: "Sucadelapje, gerookte mayonaise, krokante uitjes, rucola, zuurdesem", price: "18,50", tags: ["vlees"] },
+  { cat: "lunch", name: "Croque madame", desc: "Brioche, beenham, gruyère, spiegelei, mosterdsaus", price: "13,50", tags: ["vlees"] },
+  { cat: "lunch", name: "Tonijn tataki bowl", desc: "Sushirijst, edamame, wakame, sesam-soja, wasabi-mayo", price: "19,50", tags: ["vis", "signature"] },
+  { cat: "lunch", name: "Soep van de dag", desc: "Met brood en huisgemaakte kruidenboter", price: "8,50", tags: ["vegetarisch"] },
+
+  // Voor
+  { cat: "voor", name: "Carpaccio", desc: "Truffelmayonaise, parmezaan, rucola, pijnboompitten", price: "16,50", tags: ["vlees", "signature"] },
+  { cat: "voor", name: "Tonijn tataki", desc: "Sesam, soja-mirin, daikon, wasabicrumble", price: "17,50", tags: ["vis"] },
+  { cat: "voor", name: "Burrata", desc: "Geroosterde paprika, basilicumolie, focaccia", price: "15,50", tags: ["vegetarisch"] },
+  { cat: "voor", name: "Oesters Xuma Style", desc: "Codium-olie, chili crisps, yuzuschuim. Per stuk", price: "4,50", tags: ["vis", "signature"] },
+
+  // Tussen
+  { cat: "tussen", name: "Kreeftenbitterbal", desc: "Cocktailsaus en citroen", price: "15,50", tags: ["vis", "signature"] },
+  { cat: "tussen", name: "Jalapeño lollypop", desc: "Gefrituurde jalapeño, roomkaas, sweet chili", price: "11,50", tags: ["vegetarisch"] },
+  { cat: "tussen", name: "Tempura garnalen", desc: "Acht stuks met yuzu mayo en limoen", price: "16,50", tags: ["vis"] },
+  { cat: "tussen", name: "Truffelfrites", desc: "Met parmezaan en truffelmayo", price: "8,50", tags: ["vegetarisch"] },
+
+  // Hoofd
+  { cat: "hoofd", name: "Ossenhaas", desc: "Misoboter, geroosterde groenten, jus van zwarte knoflook", price: "32,50", tags: ["vlees", "signature"] },
+  { cat: "hoofd", name: "Kabeljauw", desc: "Beurre blanc met yuzu, fregola, geblakerde prei", price: "28,50", tags: ["vis"] },
+  { cat: "hoofd", name: "Half haantje", desc: "Gemarineerd in gochujang, gepofte aardappel, lente-ui", price: "24,50", tags: ["kip"] },
+  { cat: "hoofd", name: "Risotto van het seizoen", desc: "Met geroosterde pompoen, salie en hazelnoot", price: "22,50", tags: ["vegetarisch"] },
+
+  // Dessert
+  { cat: "dessert", name: "Dessert Xuma", desc: "Chef's signature finale, samenstelling wisselt per seizoen", price: "12,50", tags: ["signature", "vegetarisch"] },
+  { cat: "dessert", name: "Crème brûlée", desc: "Met vanille uit Madagaskar en frambozensorbet", price: "10,50", tags: ["vegetarisch"] },
+  { cat: "dessert", name: "Kaasplankje", desc: "Drie kazen, kletzenbrood, vijgenchutney", price: "13,50", tags: ["vegetarisch"] },
+
+  // High tea
+  { cat: "high-tea", name: "Scones", desc: "Met clotted cream en huisgemaakte marmelade", price: "9,50", tags: ["vegetarisch"] },
+  { cat: "high-tea", name: "Kleine taartjes", desc: "Selectie patisserie, fris en seizoensgebonden", price: "11,50", tags: ["vegetarisch"] },
+  { cat: "high-tea", name: "Hartige sandwiches", desc: "Gerookte zalm, komkommer, eiersalade", price: "10,50", tags: ["vis"] },
+  { cat: "high-tea", name: "Quiches", desc: "Wisselend, altijd met seizoensgroenten", price: "10,50", tags: ["vegetarisch"] },
+  { cat: "high-tea", name: "Volledige high tea", desc: "Alles samen, met thee naar keuze. Per persoon", price: "39,00", tags: ["signature"] },
+];
+
+interface Category {
+  id: string;
+  label: string;
+  sub?: string;
+  spotlight: { dish: string; photo: string };
+}
+
+const categories: Category[] = [
+  { id: "lunch", label: "Lunch", sub: "Dagelijks 11:00 tot 16:00", spotlight: { dish: "Tonijn tataki bowl", photo: "/photos-raw/IMG_7124-min-scaled.webp" } },
+  { id: "voor", label: "Voorgerechten", spotlight: { dish: "Oesters Xuma Style", photo: "/photos-raw/DSC03555-min-scaled.webp" } },
+  { id: "tussen", label: "Tussen door", sub: "Klein delen of als bijgerecht", spotlight: { dish: "Kreeftenbitterbal", photo: "/photos-raw/DSC01018-min-scaled.webp" } },
+  { id: "hoofd", label: "Hoofdgerechten", spotlight: { dish: "Ossenhaas", photo: "/photos-raw/IMG_7122V2-min-scaled.webp" } },
+  { id: "dessert", label: "Dessert", spotlight: { dish: "Dessert Xuma", photo: "/photos-raw/IMG_7270-min-scaled.webp" } },
+  { id: "high-tea", label: "High tea", sub: "Minimaal 24 uur vooraf reserveren", spotlight: { dish: "Volledige high tea", photo: "/photos-raw/DSC04233-min-scaled.webp" } },
+];
+
+const filters = [
+  { id: "all", label: "Alles" },
+  { id: "signature", label: "Chef's pick" },
+  { id: "vegetarisch", label: "Vegetarisch" },
+  { id: "vis", label: "Vis" },
+  { id: "vlees", label: "Vlees" },
+];
+---
+
+<Base title="Menukaart | Xuma Goes" description="De volledige menukaart van Xuma Goes: lunch, voorgerechten, hoofdgerechten, dessert en high tea.">
+  <section class="page-hero">
+    <div class="absolute inset-0">
+      <img src="/photos-raw/DSC03555-min-scaled.webp" alt="" class="w-full h-full object-cover opacity-30"/>
+      <div class="absolute inset-0 bg-gradient-to-r from-[var(--color-mocha)]/85 via-[var(--color-mocha)]/55 to-transparent"></div>
+    </div>
+    <div class="strand-rail strand-rail--right strand-rail--light"></div>
+    <div class="container relative" data-reveal style="z-index:2">
+      <span class="eyebrow text-[var(--color-copper)]">Menukaart</span>
+      <h1 class="mt-3">Onze kaart, vandaag.</h1>
+      <p>Bladeren door categorieën, filteren op dieet of voorkeur. De kaart beweegt mee met het seizoen en de aanvoer uit de regio.</p>
+    </div>
+  </section>
+
+  <!-- Sticky tabs + filters -->
+  <div class="menu-tabs-wrap" data-menu-tabs>
+    <div class="container">
+      <div role="tablist" aria-label="Menucategorieën" class="menu-tabs">
+        {categories.map((c, idx) => (
+          <button
+            type="button"
+            class="menu-tab"
+            data-menu-tab={c.id}
+            role="tab"
+            aria-selected={idx === 0 ? "true" : "false"}
+            aria-controls={`panel-${c.id}`}
+          >
+            {c.label}
+          </button>
+        ))}
+      </div>
+      <div class="menu-filters" role="group" aria-label="Filter op voorkeur">
+        <span class="menu-filters__label">Filter</span>
+        {filters.map((f, idx) => (
+          <button
+            type="button"
+            class="menu-filter"
+            data-menu-filter={f.id}
+            aria-pressed={idx === 0 ? "true" : "false"}
+          >
+            {f.label}
+          </button>
+        ))}
+      </div>
+    </div>
+  </div>
+
+  <section class="section pt-10 sm:pt-14">
+    <div class="container">
+      {categories.map((c, idx) => {
+        const inCat = dishes.filter((d) => d.cat === c.id);
+        const spotlight = inCat.find((d) => d.name === c.spotlight.dish);
+        const rest = inCat.filter((d) => d.name !== c.spotlight.dish);
+        return (
+          <div
+            class="menu-panel"
+            id={`panel-${c.id}`}
+            data-menu-panel={c.id}
+            hidden={idx !== 0}
+            role="tabpanel"
+            aria-labelledby={`tab-${c.id}`}
+          >
+            <header class="menu-panel__head">
+              <div>
+                <span class="eyebrow">Categorie</span>
+                <h2 class="font-display text-4xl sm:text-5xl leading-[1.05] mt-2">{c.label}</h2>
+                {c.sub && <p class="text-sm text-[rgba(34,23,16,0.6)] mt-2">{c.sub}</p>}
+              </div>
+              <div class="menu-panel__count" data-menu-count>{inCat.length} gerechten</div>
+            </header>
+
+            {spotlight && (
+              <article class="menu-spotlight" data-tags={spotlight.tags.join(",")}>
+                <div class="menu-spotlight__img">
+                  <img src={c.spotlight.photo} alt={spotlight.name} loading="lazy"/>
+                </div>
+                <div class="menu-spotlight__body">
+                  <span class="eyebrow" style="color: var(--season-accent-dark)">Chef's pick</span>
+                  <h3 class="font-display text-3xl sm:text-4xl mt-2 leading-tight">{spotlight.name}</h3>
+                  <p class="text-sm leading-relaxed mt-3 text-[rgba(34,23,16,0.72)] max-w-[44ch]">{spotlight.desc}</p>
+                  <div class="mt-5 flex flex-wrap items-baseline gap-x-4 gap-y-2">
+                    <span class="font-display text-2xl">&euro; {spotlight.price}</span>
+                    <div class="flex flex-wrap gap-1.5">
+                      {spotlight.tags.filter((t) => t !== "signature").map((t) => (
+                        <span class={`menu-tag menu-tag--${t}`}>{t}</span>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </article>
+            )}
+
+            <div class="menu-grid">
+              {rest.map((d) => (
+                <article class="menu-card" data-tags={d.tags.join(",")}>
+                  <div class="menu-card__head">
+                    <h3 class="menu-card__name">{d.name}</h3>
+                    <span class="menu-card__price">&euro; {d.price}</span>
+                  </div>
+                  <p class="menu-card__desc">{d.desc}</p>
+                  {d.tags.length > 0 && (
+                    <div class="menu-card__tags">
+                      {d.tags.map((t) => (
+                        <span class={`menu-tag menu-tag--${t}`}>
+                          {t === "signature" ? "Chef's pick" : t}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+                </article>
+              ))}
+            </div>
+
+            <div class="menu-empty" data-menu-empty hidden>
+              Geen gerechten in deze categorie met de gekozen filter. Probeer een andere combinatie.
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  </section>
+
+  <section class="section bg-[var(--color-ink)] text-[var(--color-bone)] bg-strands bg-strands--light">
+    <div class="container-narrow text-center" data-reveal>
+      <span class="eyebrow text-[var(--color-copper)]">Klaar om te proeven?</span>
+      <h2 class="font-display text-4xl sm:text-5xl mt-3 leading-[1.05]">Reserveer een tafel.</h2>
+      <p class="mt-5 text-[rgba(246,239,227,0.78)] max-w-[52ch] mx-auto">
+        Voor groepen vanaf zes personen of high tea raden we aan minimaal een dag vooraf te reserveren.
+      </p>
+      <div class="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
+        <button type="button" class="btn btn-light" data-zenchef-open>Reserveren</button>
+        <a href="tel:0113854494" class="btn btn-ghost" style="color: var(--color-bone); border-color: rgba(246,239,227,0.4);">Bel 0113 85 44 94</a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<script>
+  type FilterId = "all" | "signature" | "vegetarisch" | "vis" | "vlees";
+
+  const wrap = document.querySelector<HTMLElement>("[data-menu-tabs]");
+  if (wrap) {
+    const tabs = document.querySelectorAll<HTMLButtonElement>("[data-menu-tab]");
+    const panels = document.querySelectorAll<HTMLElement>("[data-menu-panel]");
+    const filterButtons = document.querySelectorAll<HTMLButtonElement>("[data-menu-filter]");
+
+    let activeCat = tabs[0]?.dataset.menuTab || "lunch";
+    let activeFilter: FilterId = "all";
+
+    const applyState = () => {
+      panels.forEach((panel) => {
+        const isActive = panel.dataset.menuPanel === activeCat;
+        panel.hidden = !isActive;
+        if (!isActive) return;
+
+        const cards = panel.querySelectorAll<HTMLElement>(".menu-card, .menu-spotlight");
+        let visible = 0;
+        cards.forEach((card) => {
+          const tags = (card.dataset.tags || "").split(",").filter(Boolean);
+          const show = activeFilter === "all" || tags.includes(activeFilter);
+          card.style.display = show ? "" : "none";
+          if (show) visible++;
+        });
+
+        const empty = panel.querySelector<HTMLElement>("[data-menu-empty]");
+        if (empty) empty.hidden = visible > 0;
+
+        const count = panel.querySelector<HTMLElement>("[data-menu-count]");
+        if (count) {
+          count.textContent =
+            activeFilter === "all"
+              ? `${visible} gerechten`
+              : `${visible} gefilterd`;
+        }
+      });
+    };
+
+    tabs.forEach((tab) => {
+      tab.addEventListener("click", () => {
+        activeCat = tab.dataset.menuTab || "lunch";
+        tabs.forEach((t) =>
+          t.setAttribute("aria-selected", t === tab ? "true" : "false")
+        );
+        applyState();
+      });
+    });
+
+    filterButtons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        activeFilter = (btn.dataset.menuFilter as FilterId) || "all";
+        filterButtons.forEach((b) =>
+          b.setAttribute("aria-pressed", b === btn ? "true" : "false")
+        );
+        applyState();
+      });
+    });
+
+    applyState();
+  }
+</script>

@@ -1,0 +1,13 @@
+---
+interface Props {
+  src?: string;
+  alt?: string;
+  aspect?: string;
+  class?: string;
+}
+const { src, alt = "", aspect = "4 / 5", class: extra = "" } = Astro.props;
+---
+
+<div class={`photo ${extra}`} style={`aspect-ratio: ${aspect};`}>
+  {src && <img src={src} alt={alt} loading="lazy" />}
+</div>
