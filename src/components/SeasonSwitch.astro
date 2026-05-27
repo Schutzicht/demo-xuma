@@ -1,26 +1,41 @@
 ---
 const seasons = [
-  { id: "lente", label: "Lente" },
-  { id: "zomer", label: "Zomer" },
-  { id: "herfst", label: "Herfst" },
-  { id: "winter", label: "Winter" },
+  { id: "lente", label: "Lente", months: "mrt · apr · mei" },
+  { id: "zomer", label: "Zomer", months: "jun · jul · aug" },
+  { id: "herfst", label: "Herfst", months: "sep · okt · nov" },
+  { id: "winter", label: "Winter", months: "dec · jan · feb" },
 ];
 ---
 
 <div class="season-switch" data-season-switch>
   <button type="button" class="season-switch__toggle" data-season-switch-toggle aria-expanded="false" aria-controls="season-panel">
+    <span class="season-switch__badge">Demo</span>
     <span class="season-switch__dot" aria-hidden="true"></span>
-    <span>Demo: <span data-season-switch-current>seizoen</span></span>
+    <span>Bekijk: <span data-season-switch-current>seizoen</span></span>
     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
       <path d="m6 9 6 6 6-6"/>
     </svg>
   </button>
 
   <div class="season-switch__panel" id="season-panel" role="dialog" aria-label="Seizoen wisselen">
-    <div class="season-switch__label">Demo: seizoen wisselen</div>
+    <div class="season-switch__head">
+      <span class="season-switch__badge season-switch__badge--dark">Demo-functie</span>
+      <div class="season-switch__label">Bekijk per seizoen</div>
+    </div>
     {seasons.map((s) => (
-      <button type="button" class="season-switch__option" data-season-option={s.id}>{s.label}</button>
+      <button type="button" class="season-switch__option" data-season-option={s.id}>
+        <span>{s.label}</span>
+        <span class="season-switch__months">{s.months}</span>
+      </button>
     ))}
-    <p class="season-switch__hint">Zo bewegen kleur, hero-tekst en aankondiging mee met het seizoen. Per kwartaal aan te passen via Agensea.</p>
+    <div class="season-switch__divider"></div>
+    <p class="season-switch__hint">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="season-switch__hint-icon">
+        <circle cx="12" cy="12" r="9"/>
+        <line x1="12" y1="11" x2="12" y2="16"/>
+        <circle cx="12" cy="8" r="0.5" fill="currentColor"/>
+      </svg>
+      <span>Op de live site bepaalt de datum welk seizoen actief is. Gasten zien geen schakelaar.</span>
+    </p>
   </div>
 </div>

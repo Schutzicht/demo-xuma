@@ -19,25 +19,37 @@
   --season-accent-dark: var(--color-copper-dark);
   --season-tint: rgba(176, 153, 122, 0.08);
 }
+:root {
+  --hero-overlay-from: 0.85;
+  --hero-overlay-via: 0.60;
+}
 [data-season="lente"] {
-  --season-accent: #B89F6E;
-  --season-accent-dark: #8E7A4E;
-  --season-tint: rgba(143, 169, 110, 0.10);
+  --season-accent: #9BA37D;
+  --season-accent-dark: #6B7551;
+  --season-tint: rgba(155, 163, 125, 0.10);
+  --hero-overlay-from: 0.74;
+  --hero-overlay-via: 0.46;
 }
 [data-season="zomer"] {
-  --season-accent: #C29466;
-  --season-accent-dark: #97713E;
-  --season-tint: rgba(194, 148, 102, 0.10);
+  --season-accent: #D08940;
+  --season-accent-dark: #8E5C24;
+  --season-tint: rgba(208, 137, 64, 0.10);
+  --hero-overlay-from: 0.68;
+  --hero-overlay-via: 0.40;
 }
 [data-season="herfst"] {
-  --season-accent: #B57536;
-  --season-accent-dark: #8A5320;
-  --season-tint: rgba(181, 117, 54, 0.10);
+  --season-accent: #A95824;
+  --season-accent-dark: #743A11;
+  --season-tint: rgba(169, 88, 36, 0.10);
+  --hero-overlay-from: 0.84;
+  --hero-overlay-via: 0.60;
 }
 [data-season="winter"] {
-  --season-accent: #9F6450;
-  --season-accent-dark: #7A4533;
-  --season-tint: rgba(159, 100, 80, 0.10);
+  --season-accent: #7C3A2E;
+  --season-accent-dark: #54241E;
+  --season-tint: rgba(124, 58, 46, 0.10);
+  --hero-overlay-from: 0.92;
+  --hero-overlay-via: 0.72;
 }
 
 [data-season-text] { display: none; }
@@ -45,6 +57,26 @@
 [data-season="zomer"]  [data-season-text="zomer"],
 [data-season="herfst"] [data-season-text="herfst"],
 [data-season="winter"] [data-season-text="winter"] { display: inline; }
+
+/* Per-season image swap (zelfde mechanisme, voor img/picture/div) */
+[data-season-img] { display: none !important; }
+[data-season="lente"]  [data-season-img="lente"],
+[data-season="zomer"]  [data-season-img="zomer"],
+[data-season="herfst"] [data-season-img="herfst"],
+[data-season="winter"] [data-season-img="winter"] { display: block !important; }
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to right,
+    rgba(34, 23, 16, var(--hero-overlay-from)) 0%,
+    rgba(34, 23, 16, var(--hero-overlay-via)) 50%,
+    transparent 100%
+  );
+  transition: background 0.6s ease;
+  pointer-events: none;
+}
 
 html {
   scroll-behavior: smooth;
@@ -672,6 +704,23 @@ body.has-intro {
   margin-top: 1rem;
 }
 
+/* Hero collage (drie foto's, asymmetrisch, gelijke totaalhoogte) */
+.hero-collage {
+  display: grid;
+  grid-template-columns: 1fr 0.9fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 0.55rem;
+  aspect-ratio: 1 / 1.12;
+}
+.hero-collage > :first-child {
+  grid-row: 1 / 3;
+}
+.hero-collage .photo {
+  height: 100%;
+  width: 100%;
+  border-radius: 10px;
+}
+
 /* Smaakkompas (Vraag het de chef) */
 .chef-grid {
   display: grid;
@@ -952,7 +1001,7 @@ body.has-intro {
   background: var(--color-ink);
   color: var(--color-bone);
   border-radius: 999px;
-  padding: 0.65rem 1rem;
+  padding: 0.5rem 0.95rem 0.5rem 0.5rem;
   font-size: 0.78rem;
   display: inline-flex;
   align-items: center;
@@ -961,6 +1010,63 @@ body.has-intro {
   cursor: pointer;
   box-shadow: 0 14px 30px -12px rgba(34,23,16,0.45);
   transition: background-color 0.2s ease;
+}
+.season-switch__badge {
+  font-size: 0.58rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  background: rgba(246, 239, 227, 0.16);
+  color: var(--color-bone);
+  padding: 0.28rem 0.5rem;
+  border-radius: 999px;
+  border: 1px solid rgba(246, 239, 227, 0.22);
+  flex-shrink: 0;
+}
+.season-switch__badge--dark {
+  background: var(--season-accent);
+  color: var(--color-bone);
+  border-color: transparent;
+}
+.season-switch__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.6rem;
+  padding: 0.1rem 0.2rem 0.5rem;
+  border-bottom: 1px solid var(--color-line);
+}
+.season-switch__head .season-switch__label {
+  margin-bottom: 0;
+}
+.season-switch__divider {
+  height: 1px;
+  background: var(--color-line);
+  margin: 0.6rem 0.3rem;
+}
+.season-switch__months {
+  font-size: 0.66rem;
+  letter-spacing: 0.06em;
+  color: rgba(34, 23, 16, 0.45);
+  margin-left: auto;
+}
+.season-switch__option[aria-current="true"] .season-switch__months {
+  color: rgba(34, 23, 16, 0.6);
+}
+.season-switch__hint {
+  font-size: 0.7rem;
+  color: rgba(34, 23, 16, 0.6);
+  margin-top: 0.4rem;
+  padding: 0 0.3rem;
+  line-height: 1.45;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.45rem;
+}
+.season-switch__hint-icon {
+  color: var(--season-accent);
+  flex-shrink: 0;
+  margin-top: 0.1rem;
 }
 .season-switch__toggle:hover { background: var(--season-accent-dark); }
 .season-switch__dot {
@@ -998,7 +1104,7 @@ body.has-intro {
   align-items: center;
   gap: 0.5rem;
   width: 100%;
-  padding: 0.5rem 0.6rem;
+  padding: 0.55rem 0.6rem;
   font-size: 0.85rem;
   color: var(--color-ink);
   background: transparent;
@@ -1006,24 +1112,17 @@ body.has-intro {
   border-radius: 8px;
   text-align: left;
   cursor: pointer;
+  font-family: var(--font-body);
 }
 .season-switch__option:hover { background: var(--color-cream); }
 .season-switch__option[aria-current="true"] {
   background: var(--color-cream);
   font-weight: 500;
 }
-.season-switch__option[aria-current="true"]::after {
+.season-switch__option[aria-current="true"]::before {
   content: "";
-  margin-left: auto;
   width: 6px; height: 6px; border-radius: 999px;
   background: var(--season-accent);
-}
-.season-switch__hint {
-  font-size: 0.7rem;
-  color: rgba(34,23,16,0.55);
-  margin-top: 0.6rem;
-  padding-inline: 0.3rem;
-  line-height: 1.4;
 }
 
 /* Strands motif (afgeleid van wandelement in restaurant) */

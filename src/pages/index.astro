@@ -83,8 +83,11 @@ const favorites = [
   <!-- Hero -->
   <section class="relative bg-[var(--color-mocha)] text-[var(--color-bone)] overflow-hidden">
     <div class="absolute inset-0">
-      <img src="/photos-raw/DSC01206-min-scaled.webp" alt="Terras van Xuma aan de Veste" class="absolute inset-0 w-full h-full object-cover opacity-40"/>
-      <div class="absolute inset-0 bg-gradient-to-r from-[var(--color-ink)]/85 via-[var(--color-ink)]/60 to-transparent"></div>
+      <img data-season-img="lente"  src="/photos-raw/DSC01206-min-scaled.webp" alt="Terras aan de Veste in het voorjaar" class="absolute inset-0 w-full h-full object-cover opacity-45"/>
+      <img data-season-img="zomer"  src="/photos-raw/IMG_7124-min-scaled.webp" alt="Veranda met gestreepte banken in de zomer" class="absolute inset-0 w-full h-full object-cover opacity-50"/>
+      <img data-season-img="herfst" src="/photos-raw/IMG_7270-min-scaled.webp" alt="Warm interieur met gouden lampen in de herfst" class="absolute inset-0 w-full h-full object-cover opacity-40"/>
+      <img data-season-img="winter" src="/photos-raw/DSC01018-min-scaled.webp" alt="Sfeervol interieur in de winter" class="absolute inset-0 w-full h-full object-cover opacity-38"/>
+      <div class="hero-overlay"></div>
     </div>
     <img src="/brand/letter-x.png" alt="" aria-hidden="true" class="letter-mark letter-mark--xl"/>
     <div class="strand-rail strand-rail--right strand-rail--light"></div>
@@ -126,12 +129,10 @@ const favorites = [
         </div>
       </div>
 
-      <div class="hidden lg:grid grid-cols-2 gap-3" data-reveal>
-        <Photo src="/photos-raw/DSC03555-min-scaled.webp" alt="Oester gerecht in gouden licht" aspect="3 / 4" class="translate-y-6"/>
-        <div class="grid gap-3">
-          <Photo src="/photos-raw/IMG_7122V2-min-scaled.webp" alt="Signature wandborden in het interieur" aspect="1 / 1"/>
-          <Photo src="/photos-raw/IMG_7270-min-scaled.webp" alt="Restaurant interieur met gouden wandlampen" aspect="3 / 4"/>
-        </div>
+      <div class="hidden lg:block hero-collage" data-reveal>
+        <Photo src="/photos-raw/DSC03555-min-scaled.webp" alt="Oester met yuzu en chili crisps" aspect="auto"/>
+        <Photo src="/photos-raw/DSC01677-min-scaled.webp" alt="Bediening achter de bar" aspect="auto"/>
+        <Photo src="/photos-raw/DSC01206-min-scaled.webp" alt="Terras aan de Veste" aspect="auto"/>
       </div>
     </div>
   </section>
