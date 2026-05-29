@@ -91,7 +91,7 @@ const winterFavorites = [
   </div>
 
   <!-- Hero -->
-  <section class="relative bg-[var(--color-mocha)] text-[var(--color-bone)] overflow-hidden">
+  <section class="relative bg-[var(--color-mocha)] text-[var(--color-bone)] overflow-hidden min-h-[88vh] flex items-center">
     <div class="absolute inset-0 hero-media">
       <img data-season-img="zomer"  src="/photos-raw/DSC01206-min-scaled.webp" alt="Gedekte tafel met uitzicht over de Veste in de zomer" class="absolute inset-0 w-full h-full object-cover opacity-50"/>
       <img data-season-img="winter" src="/photos/winter/DSC01206-min-scaled.webp" alt="Gedekte tafel aan de besneeuwde Veste in de winter" class="absolute inset-0 w-full h-full object-cover opacity-45"/>
@@ -99,8 +99,8 @@ const winterFavorites = [
     </div>
     <img src="/brand/letter-x.png" alt="" aria-hidden="true" class="letter-mark letter-mark--xl"/>
     <div class="strand-rail strand-rail--right strand-rail--light"></div>
-    <div class="container relative grid lg:grid-cols-[1.1fr_0.9fr] gap-12 items-center pt-36 sm:pt-44 pb-20 sm:pb-28" style="z-index:2">
-      <div data-reveal>
+    <div class="container relative pt-28 pb-24" style="z-index:2">
+      <div data-reveal class="max-w-[680px]">
         <span class="eyebrow" style="color: var(--season-accent)">
           <span data-season-text="zomer">Zomeravonden aan de Veste</span>
           <span data-season-text="winter">Winters warm onthaal</span>
@@ -131,12 +131,6 @@ const winterFavorites = [
           <span class="divider-dot"></span>
           <span>0113 85 44 94</span>
         </div>
-      </div>
-
-      <div class="hidden lg:block hero-collage" data-reveal>
-        <Photo src="/photos-raw/DSC03555-min-scaled.webp" alt="Oester met yuzu en chili crisps" aspect="auto"/>
-        <Photo src="/photos/terras-veste.webp" alt="Terras aan de Veste" aspect="auto"/>
-        <Photo src="/photos/terras-parasols.webp" alt="Terras met balinese parasols" aspect="auto"/>
       </div>
     </div>
     <div class="scroll-hint" aria-hidden="true">

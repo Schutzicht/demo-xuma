@@ -1247,10 +1247,10 @@ body.has-intro {
   height: 120%;
   top: -10%;
   right: -8%;
-  opacity: 0.14;
+  opacity: 0.07;
 }
 @media (max-width: 768px) {
-  .letter-mark--xl { height: 90%; right: -25%; top: 5%; opacity: 0.1; }
+  .letter-mark--xl { height: 90%; right: -25%; top: 5%; opacity: 0.06; }
 }
 
 /* Letter als section-marker (bij principles, etc.) */
