@@ -65,6 +65,11 @@
 [data-season="herfst"] [data-season-img="herfst"],
 [data-season="winter"] [data-season-img="winter"] { display: block !important; }
 
+/* Per-season content block (hele tekstblokken, kaartlijsten, etc.) */
+[data-season-block] { display: none; }
+[data-season="zomer"]  [data-season-block="zomer"],
+[data-season="winter"] [data-season-block="winter"] { display: block; }
+
 .hero-overlay {
   position: absolute;
   inset: 0;

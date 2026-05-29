@@ -5,77 +5,59 @@ import Photo from "../components/Photo.astro";
 interface Mood {
   label: string;
   sub: string;
+  icon: string;
+}
+interface MoodResult {
   dish: string;
   price: string;
   story: string;
   photo: string;
-  icon: string;
 }
 
+// De 6 stemmingen zijn seizoensneutraal; de aanbeveling van de chef wisselt per seizoen.
 const moods: Mood[] = [
-  {
-    label: "Romantisch avondje",
-    sub: "Twee, dimlicht, geen haast",
-    dish: "Het Proefmenu",
-    price: "€ 59,50 p.p.",
-    story: "Drie gangen die in elkaars verlengde liggen, samengesteld door de chef. Begint zacht, eindigt zoet.",
-    photo: "/photos-raw/IMG_7270-min-scaled.webp",
-    icon: "candle",
-  },
-  {
-    label: "Verrassen op tafel",
-    sub: "Voor wie indruk wil maken",
-    dish: "Oesters Xuma Style",
-    price: "€ 4,50 per stuk",
-    story: "Codium-olie, chili crisps en yuzuschuim. Klassiek omgegooid, in één hap weg.",
-    photo: "/photos-raw/DSC03555-min-scaled.webp",
-    icon: "sparkle",
-  },
-  {
-    label: "Snelle lunch",
-    sub: "Tussen werk en de middag door",
-    dish: "Open steak sandwich",
-    price: "€ 18,50",
-    story: "Sucadelapje, gerookte mayo, krokante uitjes op zuurdesem. Stevig genoeg, vlot gebracht.",
-    photo: "/photos-raw/IMG_7253-min-scaled.webp",
-    icon: "clock",
-  },
-  {
-    label: "Vegetarisch verfijnd",
-    sub: "Vol zonder vlees",
-    dish: "Risotto van het seizoen",
-    price: "€ 22,50",
-    story: "Met geroosterde pompoen, salie en hazelnoot. Het seizoen op een diep bord.",
-    photo: "/photos-raw/IMG_7122V2-min-scaled.webp",
-    icon: "leaf",
-  },
-  {
-    label: "Apero met vrienden",
-    sub: "Klein delen aan de bar",
-    dish: "Tempura garnalen",
-    price: "€ 16,50",
-    story: "Acht stuks met yuzu mayo en limoen. Bestel er meteen onze Xuma Spritz bij.",
-    photo: "/photos-raw/IMG_7396-min-scaled.webp",
-    icon: "glass",
-  },
-  {
-    label: "Iets dat opvalt",
-    sub: "Voor wie iets nieuws wil",
-    dish: "Half haantje",
-    price: "€ 24,50",
-    story: "Gemarineerd in gochujang met gepofte aardappel. Zacht, kruidig, met een glans.",
-    photo: "/photos-raw/IMG_7124-min-scaled.webp",
-    icon: "flame",
-  },
+  { label: "Romantisch avondje", sub: "Twee, dimlicht, geen haast", icon: "candle" },
+  { label: "Verrassen op tafel", sub: "Voor wie indruk wil maken", icon: "sparkle" },
+  { label: "Snelle lunch", sub: "Tussen werk en de middag door", icon: "clock" },
+  { label: "Vegetarisch verfijnd", sub: "Vol zonder vlees", icon: "leaf" },
+  { label: "Apero met vrienden", sub: "Klein delen aan de bar", icon: "glass" },
+  { label: "Iets dat opvalt", sub: "Voor wie iets nieuws wil", icon: "flame" },
 ];
 
-const favorites = [
+const moodResults: { zomer: MoodResult[]; winter: MoodResult[] } = {
+  zomer: [
+    { dish: "Het Proefmenu", price: "€ 59,50 p.p.", story: "Drie gangen die in elkaars verlengde liggen, samengesteld door de chef. Begint zacht, eindigt zoet.", photo: "/photos-raw/IMG_7270-min-scaled.webp" },
+    { dish: "Oesters Xuma Style", price: "€ 4,50 per stuk", story: "Codium-olie, chili crisps en yuzuschuim. Klassiek omgegooid, in één hap weg.", photo: "/photos-raw/DSC03555-min-scaled.webp" },
+    { dish: "Open steak sandwich", price: "€ 18,50", story: "Sucadelapje, gerookte mayo, krokante uitjes op zuurdesem. Stevig genoeg, vlot gebracht.", photo: "/photos-raw/IMG_7253-min-scaled.webp" },
+    { dish: "Zomerrisotto", price: "€ 22,50", story: "Doperwt, tuinboon, munt en parmezaan. Het seizoen op een diep bord.", photo: "/photos-raw/IMG_7122V2-min-scaled.webp" },
+    { dish: "Tempura garnalen", price: "€ 16,50", story: "Acht stuks met yuzu mayo en limoen. Bestel er meteen onze Xuma Spritz bij.", photo: "/photos-raw/IMG_7396-min-scaled.webp" },
+    { dish: "Half haantje", price: "€ 24,50", story: "Gemarineerd in gochujang met gepofte aardappel. Zacht, kruidig, met een glans.", photo: "/photos-raw/IMG_7124-min-scaled.webp" },
+  ],
+  winter: [
+    { dish: "Het Winterproefmenu", price: "€ 64,50 p.p.", story: "Drie gangen rond wild en wintergroenten, opgebouwd door de chef. Warm, diep en verfijnd.", photo: "/photos/winter/IMG_7270-min-scaled.webp" },
+    { dish: "Hertencarpaccio met truffel", price: "€ 18,50", story: "Wildvlees, truffeltapenade, parmezaan en geroosterde hazelnoot. Subtiel en chic.", photo: "/photos/winter/DSC01018-min-scaled.webp" },
+    { dish: "Wildburger", price: "€ 21,50", story: "Hertenburger met uiencompote en truffelmayo op brioche. Stevig, vlot gebracht.", photo: "/photos/winter/IMG_7253-min-scaled.webp" },
+    { dish: "Wintergroente-curry", price: "€ 22,50", story: "Pompoen, knol, kokos en gember. Vol en verwarmend, zonder vlees.", photo: "/photos/winter/IMG_7122V2-min-scaled.webp" },
+    { dish: "Wildbitterballen", price: "€ 15,50", story: "Ragout van hert en wildzwijn met mosterd van zwarte knoflook. Bestel er glühwein bij.", photo: "/photos/winter/IMG_7396-min-scaled.webp" },
+    { dish: "Stoofpotje van Zeeuws rund", price: "€ 27,50", story: "Acht uur gegaard, winterwortel en romige puree. Pure winterkost met een twist.", photo: "/photos/winter/IMG_7124-min-scaled.webp" },
+  ],
+};
+
+const summerFavorites = [
   { name: "Carpaccio", desc: "Truffelmayonaise, parmezaan, rucola, pijnboompitten", price: "16,50" },
   { name: "Oesters Xuma Style", desc: "Codium-olie, chili crisps, yuzuschuim", price: "4,50 per stuk" },
   { name: "Tonijn tataki", desc: "Sesam, soja-mirin, daikon, wasabicrumble", price: "17,50" },
   { name: "Kreeftenbitterbal", desc: "Cocktailsaus, citroen", price: "15,50" },
   { name: "Ossenhaas", desc: "Misoboter, geroosterde groenten, jus van zwarte knoflook", price: "32,50" },
-  { name: "Dessert Xuma", desc: "Chef's signature finale", price: "12,50" },
+  { name: "Frambozen-yuzu cheesecake", desc: "Frambozensorbet, limoen", price: "10,50" },
+];
+const winterFavorites = [
+  { name: "Hertencarpaccio met truffel", desc: "Truffeltapenade, parmezaan, geroosterde hazelnoot", price: "18,50" },
+  { name: "Oesters Xuma Style", desc: "Codium-olie, chili crisps, yuzuschuim", price: "4,50 per stuk" },
+  { name: "Wildbitterbal", desc: "Ragout van hert en wildzwijn, zwarte knoflook", price: "15,50" },
+  { name: "Hertenrugfilet", desc: "Wildjus, knolselderij, rodekool, gepofte aardappel", price: "33,50" },
+  { name: "Stoofpotje van Zeeuws rund", desc: "Acht uur gegaard, winterwortel, aardappelpuree", price: "27,50" },
+  { name: "Warme chocolademoelleux", desc: "Vloeibaar hart, gezouten karamel, vanille-ijs", price: "11,50" },
 ];
 ---
 
@@ -174,24 +156,42 @@ const favorites = [
     <div class="container">
       <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-12" data-reveal>
         <div>
-          <span class="eyebrow">Xuma's favorites</span>
+          <span class="eyebrow">
+            <span data-season-text="zomer">Zomerfavorieten</span>
+            <span data-season-text="winter">Winterfavorieten</span>
+          </span>
           <h2 class="font-display text-4xl sm:text-5xl mt-3 leading-[1.05]">Gerechten waar gasten voor terugkomen.</h2>
         </div>
         <a href="/menukaart" class="btn btn-ghost self-start">Volledige menukaart</a>
       </div>
 
-      <div class="grid md:grid-cols-2 gap-x-12 gap-y-1" data-reveal>
-        {
-          favorites.map((dish) => (
-            <article class="menu-item">
-              <div>
-                <div class="menu-item__name">{dish.name}</div>
-                <div class="menu-item__desc">{dish.desc}</div>
-              </div>
-              <div class="menu-item__price">&euro; {dish.price}</div>
-            </article>
-          ))
-        }
+      <div data-reveal>
+        <div data-season-block="zomer">
+          <div class="grid md:grid-cols-2 gap-x-12 gap-y-1">
+            {summerFavorites.map((dish) => (
+              <article class="menu-item">
+                <div>
+                  <div class="menu-item__name">{dish.name}</div>
+                  <div class="menu-item__desc">{dish.desc}</div>
+                </div>
+                <div class="menu-item__price">&euro; {dish.price}</div>
+              </article>
+            ))}
+          </div>
+        </div>
+        <div data-season-block="winter">
+          <div class="grid md:grid-cols-2 gap-x-12 gap-y-1">
+            {winterFavorites.map((dish) => (
+              <article class="menu-item">
+                <div>
+                  <div class="menu-item__name">{dish.name}</div>
+                  <div class="menu-item__desc">{dish.desc}</div>
+                </div>
+                <div class="menu-item__price">&euro; {dish.price}</div>
+              </article>
+            ))}
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -264,7 +264,7 @@ const favorites = [
       </div>
     </div>
 
-    <script is:inline define:vars={{ moods }}>
+    <script is:inline define:vars={{ moodResults }}>
       (function () {
         const buttons = document.querySelectorAll("[data-chef-mood]");
         const result = document.querySelector("[data-chef-result]");
@@ -272,28 +272,41 @@ const favorites = [
         const name = document.querySelector("[data-chef-name]");
         const price = document.querySelector("[data-chef-price]");
         const story = document.querySelector("[data-chef-story]");
+        let activeIndex = -1;
+
+        const season = () =>
+          document.documentElement.getAttribute("data-season") === "winter" ? "winter" : "zomer";
+
+        const render = (i) => {
+          const m = (moodResults[season()] || moodResults.zomer)[i];
+          if (!m) return;
+          if (photo) {
+            photo.setAttribute("src", m.photo);
+            photo.setAttribute("alt", m.dish);
+          }
+          if (name) name.textContent = m.dish;
+          if (price) price.textContent = m.price;
+          if (story) story.textContent = m.story;
+        };
 
         buttons.forEach((btn) => {
           btn.addEventListener("click", () => {
-            const i = parseInt(btn.getAttribute("data-chef-mood") || "0", 10);
-            const m = moods[i];
-            if (!m) return;
+            activeIndex = parseInt(btn.getAttribute("data-chef-mood") || "0", 10);
             buttons.forEach((b) =>
               b.setAttribute("aria-pressed", b === btn ? "true" : "false")
             );
-            if (photo) {
-              photo.setAttribute("src", m.photo);
-              photo.setAttribute("alt", m.dish);
-            }
-            if (name) name.textContent = m.dish;
-            if (price) price.textContent = m.price;
-            if (story) story.textContent = m.story;
+            render(activeIndex);
             if (result) {
               result.hidden = false;
               requestAnimationFrame(() => result.classList.add("is-shown"));
             }
           });
         });
+
+        // Aanbeveling meebewegen als het seizoen wisselt terwijl een mood actief is.
+        new MutationObserver(() => {
+          if (activeIndex >= 0) render(activeIndex);
+        }).observe(document.documentElement, { attributes: true, attributeFilter: ["data-season"] });
       })();
     </script>
   </section>
@@ -303,31 +316,35 @@ const favorites = [
     <div class="strand-rail strand-rail--left"></div>
     <div class="container grid lg:grid-cols-[1.1fr_1fr] gap-12 items-center" style="position:relative; z-index:2">
       <div data-reveal>
-        <span class="eyebrow">Proefmenu</span>
+        <span class="eyebrow">
+          <span data-season-text="zomer">Zomerproefmenu</span>
+          <span data-season-text="winter">Winterproefmenu</span>
+        </span>
         <h2 class="font-display text-4xl sm:text-5xl mt-3 leading-[1.05]">
           Drie gangen, &eacute;&eacute;n verhaal.
         </h2>
         <p class="mt-5 text-base leading-relaxed text-[rgba(34,23,16,0.78)] max-w-[55ch]">
-          Laat onze keuken bepalen. Het Xuma Proefmenu neemt je mee langs onze huidige favorieten, opgebouwd in drie gangen die in elkaars verlengde liggen.
+          <span data-season-text="zomer">Laat onze keuken bepalen. Het Xuma Proefmenu neemt je mee langs onze zomerse favorieten, opgebouwd in drie gangen die in elkaars verlengde liggen.</span>
+          <span data-season-text="winter">Laat onze keuken bepalen. Het Winterproefmenu draait om wild en wintergroenten, opgebouwd in drie gangen die in elkaars verlengde liggen.</span>
         </p>
         <ul class="mt-6 space-y-3 text-sm">
           <li class="flex items-baseline gap-3">
             <span class="font-display text-lg text-[var(--color-copper-dark)]">01</span>
-            <span><strong class="font-medium">Voor.</strong> Carpaccio of tonijn tataki</span>
+            <span><strong class="font-medium">Voor.</strong> <span data-season-text="zomer">Carpaccio of tonijn tataki</span><span data-season-text="winter">Hertencarpaccio of wildpat&eacute;</span></span>
           </li>
           <li class="flex items-baseline gap-3">
             <span class="font-display text-lg text-[var(--color-copper-dark)]">02</span>
-            <span><strong class="font-medium">Hoofd.</strong> Ossenhaas of kabeljauw</span>
+            <span><strong class="font-medium">Hoofd.</strong> <span data-season-text="zomer">Ossenhaas of kabeljauw</span><span data-season-text="winter">Hertenrugfilet of stoofpotje van Zeeuws rund</span></span>
           </li>
           <li class="flex items-baseline gap-3">
             <span class="font-display text-lg text-[var(--color-copper-dark)]">03</span>
-            <span><strong class="font-medium">Dessert.</strong> Dessert Xuma, signature finale</span>
+            <span><strong class="font-medium">Dessert.</strong> <span data-season-text="zomer">Dessert Xuma, signature finale</span><span data-season-text="winter">Warme chocolademoelleux met karamel</span></span>
           </li>
         </ul>
         <div class="mt-8 flex flex-wrap items-center gap-5">
           <div>
             <div class="text-xs uppercase tracking-[0.18em] text-[var(--color-copper-dark)]">Vanaf</div>
-            <div class="font-display text-4xl">&euro; 59,50</div>
+            <div class="font-display text-4xl">&euro; <span data-season-text="zomer">59,50</span><span data-season-text="winter">64,50</span></div>
           </div>
           <button type="button" class="btn btn-primary" data-zenchef-open>
             Reserveer een tafel
@@ -351,12 +368,17 @@ const favorites = [
         <Photo src="/photos/eethoek-daglicht.webp" alt="Lichte eethoek met daglicht aan de Veste" aspect="4 / 5"/>
       </div>
       <div data-reveal>
-        <span class="eyebrow">High tea bij Xuma</span>
+        <span class="eyebrow">
+          <span data-season-text="zomer">High tea bij Xuma</span>
+          <span data-season-text="winter">Winter high tea bij Xuma</span>
+        </span>
         <h2 class="font-display text-4xl sm:text-5xl mt-3 leading-[1.05]">
-          Een middag aan de Veste.
+          <span data-season-text="zomer">Een middag aan de Veste.</span>
+          <span data-season-text="winter">Warm de winter door.</span>
         </h2>
         <p class="mt-5 text-base leading-relaxed text-[rgba(34,23,16,0.78)] max-w-[55ch]">
-          Scones met clotted cream, hartige sandwiches, kleine taartjes, eigen quiches en uiteraard de oesters Xuma Style. Boven of beneden, voor twee of voor acht.
+          <span data-season-text="zomer">Scones met clotted cream, hartige sandwiches, kleine taartjes, eigen quiches en uiteraard de oesters Xuma Style. Boven of beneden, voor twee of voor acht.</span>
+          <span data-season-text="winter">Scones met clotted cream, hartige sandwiches, gl&uuml;hwein-gepocheerde peer en warme chocolade met eigen marshmallows. Bij de open haard, voor twee of voor acht.</span>
         </p>
         <a href="/menukaart#high-tea" class="inline-flex items-center gap-2 mt-7 text-sm font-medium text-[var(--color-copper-dark)] hover:text-[var(--color-copper)]">
           Bekijk de high tea kaart
@@ -394,7 +416,8 @@ const favorites = [
         Reserveer je tafel bij Xuma.
       </h2>
       <p class="mt-5 text-[rgba(246,239,227,0.78)] max-w-[52ch] mx-auto">
-        Lunch, diner of high tea. Wij staan dagelijks van 11:00 tot 23:00 voor je klaar.
+        <span data-season-text="zomer">Lunch, diner of high tea aan de waterkant. Wij staan dagelijks van 11:00 tot 23:00 voor je klaar.</span>
+        <span data-season-text="winter">Wild, stoof en warme winteravonden binnen. Wij staan dagelijks van 11:00 tot 23:00 voor je klaar.</span>
       </p>
       <div class="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
         <button type="button" class="btn btn-light" data-zenchef-open>Reserveren</button>

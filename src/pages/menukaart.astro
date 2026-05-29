@@ -10,68 +10,92 @@ const winterOf = (src: string): string | null => {
   return fs.existsSync(path.join(process.cwd(), "public", cand.slice(1))) ? cand : null;
 };
 
+type Season = "zomer" | "winter";
+
 interface Dish {
   cat: string;
   name: string;
   desc: string;
   price: string;
   tags: string[];
+  season?: Season; // afwezig = hele jaar
 }
 
 const dishes: Dish[] = [
   // Lunch
   { cat: "lunch", name: "Klassieke Caesar salade", desc: "Gegrilde kipdijfilet, ansjovis-dressing, croutons, parmezaan", price: "16,50", tags: ["kip"] },
-  { cat: "lunch", name: "Gegrilde geitenkaas salade", desc: "Geitenkaas, granaatappel, walnoten, honing-mosterddressing", price: "17,50", tags: ["vegetarisch"] },
   { cat: "lunch", name: "Open steak sandwich", desc: "Sucadelapje, gerookte mayonaise, krokante uitjes, rucola, zuurdesem", price: "18,50", tags: ["vlees"] },
   { cat: "lunch", name: "Croque madame", desc: "Brioche, beenham, gruyère, spiegelei, mosterdsaus", price: "13,50", tags: ["vlees"] },
-  { cat: "lunch", name: "Tonijn tataki bowl", desc: "Sushirijst, edamame, wakame, sesam-soja, wasabi-mayo", price: "19,50", tags: ["vis", "signature"] },
-  { cat: "lunch", name: "Soep van de dag", desc: "Met brood en huisgemaakte kruidenboter", price: "8,50", tags: ["vegetarisch"] },
+  { cat: "lunch", name: "Tonijn tataki bowl", desc: "Sushirijst, edamame, wakame, sesam-soja, wasabi-mayo", price: "19,50", tags: ["vis", "signature"], season: "zomer" },
+  { cat: "lunch", name: "Gegrilde geitenkaas salade", desc: "Geitenkaas, granaatappel, walnoten, honing-mosterddressing", price: "17,50", tags: ["vegetarisch"], season: "zomer" },
+  { cat: "lunch", name: "Gazpacho van de zon", desc: "Koude tomatensoep, basilicumolie, croutons", price: "8,50", tags: ["vegetarisch"], season: "zomer" },
+  { cat: "lunch", name: "Wildburger", desc: "Hertenburger, uiencompote, truffelmayo, brioche", price: "21,50", tags: ["vlees", "signature"], season: "winter" },
+  { cat: "lunch", name: "Warme geitenkaas-bietensalade", desc: "Rode biet, walnoot, honing, kruidenolie", price: "17,50", tags: ["vegetarisch"], season: "winter" },
+  { cat: "lunch", name: "Pompoen-kokossoep", desc: "Geroosterde pompoen, gember, kokos, pompoenpit", price: "8,50", tags: ["vegetarisch"], season: "winter" },
 
   // Voor
   { cat: "voor", name: "Carpaccio", desc: "Truffelmayonaise, parmezaan, rucola, pijnboompitten", price: "16,50", tags: ["vlees", "signature"] },
-  { cat: "voor", name: "Tonijn tataki", desc: "Sesam, soja-mirin, daikon, wasabicrumble", price: "17,50", tags: ["vis"] },
-  { cat: "voor", name: "Burrata", desc: "Geroosterde paprika, basilicumolie, focaccia", price: "15,50", tags: ["vegetarisch"] },
   { cat: "voor", name: "Oesters Xuma Style", desc: "Codium-olie, chili crisps, yuzuschuim. Per stuk", price: "4,50", tags: ["vis", "signature"] },
+  { cat: "voor", name: "Tonijn tataki", desc: "Sesam, soja-mirin, daikon, wasabicrumble", price: "17,50", tags: ["vis"], season: "zomer" },
+  { cat: "voor", name: "Burrata", desc: "Geroosterde paprika, basilicumolie, focaccia", price: "15,50", tags: ["vegetarisch"], season: "zomer" },
+  { cat: "voor", name: "Hertencarpaccio met truffel", desc: "Wildvlees, truffeltapenade, parmezaan, geroosterde hazelnoot", price: "18,50", tags: ["vlees", "signature"], season: "winter" },
+  { cat: "voor", name: "Wildpaté", desc: "Huisgemaakt, met vijgencompote en brioche", price: "15,50", tags: ["vlees"], season: "winter" },
 
   // Tussen
-  { cat: "tussen", name: "Kreeftenbitterbal", desc: "Cocktailsaus en citroen", price: "15,50", tags: ["vis", "signature"] },
-  { cat: "tussen", name: "Jalapeño lollypop", desc: "Gefrituurde jalapeño, roomkaas, sweet chili", price: "11,50", tags: ["vegetarisch"] },
-  { cat: "tussen", name: "Tempura garnalen", desc: "Acht stuks met yuzu mayo en limoen", price: "16,50", tags: ["vis"] },
   { cat: "tussen", name: "Truffelfrites", desc: "Met parmezaan en truffelmayo", price: "8,50", tags: ["vegetarisch"] },
+  { cat: "tussen", name: "Jalapeño lollypop", desc: "Gefrituurde jalapeño, roomkaas, sweet chili", price: "11,50", tags: ["vegetarisch"] },
+  { cat: "tussen", name: "Kreeftenbitterbal", desc: "Cocktailsaus en citroen", price: "15,50", tags: ["vis", "signature"], season: "zomer" },
+  { cat: "tussen", name: "Tempura garnalen", desc: "Acht stuks met yuzu mayo en limoen", price: "16,50", tags: ["vis"], season: "zomer" },
+  { cat: "tussen", name: "Wildbitterbal", desc: "Ragout van hert en wildzwijn, mosterd van zwarte knoflook", price: "15,50", tags: ["vlees", "signature"], season: "winter" },
+  { cat: "tussen", name: "Pompoenkroketjes", desc: "Geroosterde pompoen, salie, truffelmayo", price: "11,50", tags: ["vegetarisch"], season: "winter" },
 
   // Hoofd
   { cat: "hoofd", name: "Ossenhaas", desc: "Misoboter, geroosterde groenten, jus van zwarte knoflook", price: "32,50", tags: ["vlees", "signature"] },
   { cat: "hoofd", name: "Kabeljauw", desc: "Beurre blanc met yuzu, fregola, geblakerde prei", price: "28,50", tags: ["vis"] },
-  { cat: "hoofd", name: "Half haantje", desc: "Gemarineerd in gochujang, gepofte aardappel, lente-ui", price: "24,50", tags: ["kip"] },
-  { cat: "hoofd", name: "Risotto van het seizoen", desc: "Met geroosterde pompoen, salie en hazelnoot", price: "22,50", tags: ["vegetarisch"] },
+  { cat: "hoofd", name: "Half haantje", desc: "Gemarineerd in gochujang, gepofte aardappel, lente-ui", price: "24,50", tags: ["kip"], season: "zomer" },
+  { cat: "hoofd", name: "Zomerrisotto", desc: "Doperwt, tuinbonen, munt, geschaafde parmezaan", price: "22,50", tags: ["vegetarisch"], season: "zomer" },
+  { cat: "hoofd", name: "Hertenrugfilet", desc: "Wildjus, knolselderij, rodekool, gepofte aardappel", price: "33,50", tags: ["vlees", "signature"], season: "winter" },
+  { cat: "hoofd", name: "Stoofpotje van Zeeuws rund", desc: "Acht uur gegaard, winterwortel, aardappelpuree", price: "27,50", tags: ["vlees"], season: "winter" },
+  { cat: "hoofd", name: "Wintergroente-curry", desc: "Pompoen, knol, kokos, gember, koriander", price: "22,50", tags: ["vegetarisch"], season: "winter" },
 
   // Dessert
   { cat: "dessert", name: "Dessert Xuma", desc: "Chef's signature finale, samenstelling wisselt per seizoen", price: "12,50", tags: ["signature", "vegetarisch"] },
-  { cat: "dessert", name: "Crème brûlée", desc: "Met vanille uit Madagaskar en frambozensorbet", price: "10,50", tags: ["vegetarisch"] },
   { cat: "dessert", name: "Kaasplankje", desc: "Drie kazen, kletzenbrood, vijgenchutney", price: "13,50", tags: ["vegetarisch"] },
+  { cat: "dessert", name: "Frambozen-yuzu cheesecake", desc: "Frisse cheesecake, frambozensorbet, limoen", price: "10,50", tags: ["vegetarisch"], season: "zomer" },
+  { cat: "dessert", name: "Crème brûlée", desc: "Met vanille uit Madagaskar en frambozensorbet", price: "10,50", tags: ["vegetarisch"], season: "zomer" },
+  { cat: "dessert", name: "Warme chocolademoelleux", desc: "Vloeibaar hart, gezouten karamel, vanille-ijs", price: "11,50", tags: ["vegetarisch", "signature"], season: "winter" },
+  { cat: "dessert", name: "Winterse appelcrumble", desc: "Warm, met kaneelijs en karamelsaus", price: "10,50", tags: ["vegetarisch"], season: "winter" },
 
   // High tea
-  { cat: "high-tea", name: "Scones", desc: "Met clotted cream en huisgemaakte marmelade", price: "9,50", tags: ["vegetarisch"] },
-  { cat: "high-tea", name: "Kleine taartjes", desc: "Selectie patisserie, fris en seizoensgebonden", price: "11,50", tags: ["vegetarisch"] },
-  { cat: "high-tea", name: "Hartige sandwiches", desc: "Gerookte zalm, komkommer, eiersalade", price: "10,50", tags: ["vis"] },
-  { cat: "high-tea", name: "Quiches", desc: "Wisselend, altijd met seizoensgroenten", price: "10,50", tags: ["vegetarisch"] },
   { cat: "high-tea", name: "Volledige high tea", desc: "Alles samen, met thee naar keuze. Per persoon", price: "39,00", tags: ["signature"] },
+  { cat: "high-tea", name: "Scones", desc: "Met clotted cream en huisgemaakte marmelade", price: "9,50", tags: ["vegetarisch"] },
+  { cat: "high-tea", name: "Hartige sandwiches", desc: "Gerookte zalm, komkommer, eiersalade", price: "10,50", tags: ["vis"] },
+  { cat: "high-tea", name: "Kleine taartjes", desc: "Selectie patisserie, fris en zomers", price: "11,50", tags: ["vegetarisch"], season: "zomer" },
+  { cat: "high-tea", name: "Glühwein-gepocheerde peer", desc: "Met kruidige siroop en mascarpone", price: "9,50", tags: ["vegetarisch"], season: "winter" },
+  { cat: "high-tea", name: "Warme chocolade & marshmallow", desc: "Huisgemaakte warme chocolademelk, eigen marshmallows", price: "6,50", tags: ["vegetarisch"], season: "winter" },
 ];
 
 interface Category {
   id: string;
   label: string;
   sub?: string;
-  spotlight: { dish: string; photo: string };
+  // Spotlight per seizoen; gelijk = jaarrond hetzelfde.
+  spotlight: { zomer: { dish: string; photo: string }; winter: { dish: string; photo: string } };
 }
 
 const categories: Category[] = [
-  { id: "lunch", label: "Lunch", sub: "Dagelijks 11:00 tot 16:00", spotlight: { dish: "Tonijn tataki bowl", photo: "/photos-raw/IMG_7124-min-scaled.webp" } },
-  { id: "voor", label: "Voorgerechten", spotlight: { dish: "Oesters Xuma Style", photo: "/photos-raw/DSC03555-min-scaled.webp" } },
-  { id: "tussen", label: "Tussen door", sub: "Klein delen of als bijgerecht", spotlight: { dish: "Kreeftenbitterbal", photo: "/photos-raw/DSC01018-min-scaled.webp" } },
-  { id: "hoofd", label: "Hoofdgerechten", spotlight: { dish: "Ossenhaas", photo: "/photos-raw/IMG_7122V2-min-scaled.webp" } },
-  { id: "dessert", label: "Dessert", spotlight: { dish: "Dessert Xuma", photo: "/photos-raw/IMG_7270-min-scaled.webp" } },
-  { id: "high-tea", label: "High tea", sub: "Minimaal 24 uur vooraf reserveren", spotlight: { dish: "Volledige high tea", photo: "/photos-raw/DSC04233-min-scaled.webp" } },
+  { id: "lunch", label: "Lunch", sub: "Dagelijks 11:00 tot 16:00",
+    spotlight: { zomer: { dish: "Tonijn tataki bowl", photo: "/photos-raw/IMG_7124-min-scaled.webp" }, winter: { dish: "Wildburger", photo: "/photos-raw/IMG_7124-min-scaled.webp" } } },
+  { id: "voor", label: "Voorgerechten",
+    spotlight: { zomer: { dish: "Oesters Xuma Style", photo: "/photos-raw/DSC03555-min-scaled.webp" }, winter: { dish: "Hertencarpaccio met truffel", photo: "/photos-raw/DSC03555-min-scaled.webp" } } },
+  { id: "tussen", label: "Tussen door", sub: "Klein delen of als bijgerecht",
+    spotlight: { zomer: { dish: "Kreeftenbitterbal", photo: "/photos-raw/DSC01018-min-scaled.webp" }, winter: { dish: "Wildbitterbal", photo: "/photos-raw/DSC01018-min-scaled.webp" } } },
+  { id: "hoofd", label: "Hoofdgerechten",
+    spotlight: { zomer: { dish: "Half haantje", photo: "/photos-raw/IMG_7122V2-min-scaled.webp" }, winter: { dish: "Hertenrugfilet", photo: "/photos-raw/IMG_7122V2-min-scaled.webp" } } },
+  { id: "dessert", label: "Dessert",
+    spotlight: { zomer: { dish: "Frambozen-yuzu cheesecake", photo: "/photos-raw/IMG_7270-min-scaled.webp" }, winter: { dish: "Warme chocolademoelleux", photo: "/photos-raw/IMG_7270-min-scaled.webp" } } },
+  { id: "high-tea", label: "High tea", sub: "Minimaal 24 uur vooraf reserveren",
+    spotlight: { zomer: { dish: "Volledige high tea", photo: "/photos-raw/DSC04233-min-scaled.webp" }, winter: { dish: "Volledige high tea", photo: "/photos-raw/DSC04233-min-scaled.webp" } } },
 ];
 
 const filters = [
@@ -91,9 +115,15 @@ const filters = [
     </div>
     <div class="strand-rail strand-rail--right strand-rail--light"></div>
     <div class="container relative" data-reveal style="z-index:2">
-      <span class="eyebrow text-[var(--color-copper)]">Menukaart</span>
+      <span class="eyebrow text-[var(--color-copper)]">
+        <span data-season-text="zomer">Zomerkaart</span>
+        <span data-season-text="winter">Winterkaart</span>
+      </span>
       <h1 class="mt-3">Onze kaart, vandaag.</h1>
-      <p>Bladeren door categorieën, filteren op dieet of voorkeur. De kaart beweegt mee met het seizoen en de aanvoer uit de regio.</p>
+      <p>
+        <span data-season-text="zomer">Frisse, lichte gerechten voor lange dagen aan de Veste. Bladeren door categorie&euml;n, filteren op voorkeur, de kaart beweegt mee met het seizoen.</span>
+        <span data-season-text="winter">Wild, stoof en warme wintergerechten. Bladeren door categorie&euml;n, filteren op voorkeur, de kaart beweegt mee met het seizoen.</span>
+      </p>
     </div>
   </section>
 
@@ -134,8 +164,15 @@ const filters = [
     <div class="container">
       {categories.map((c, idx) => {
         const inCat = dishes.filter((d) => d.cat === c.id);
-        const spotlight = inCat.find((d) => d.name === c.spotlight.dish);
-        const rest = inCat.filter((d) => d.name !== c.spotlight.dish);
+        const sZ = c.spotlight.zomer;
+        const sW = c.spotlight.winter;
+        const shared = sZ.dish === sW.dish && sZ.photo === sW.photo;
+        const spotNames = new Set([sZ.dish, sW.dish]);
+        const rest = inCat.filter((d) => !spotNames.has(d.name));
+        const spots = shared
+          ? [{ ref: sZ, season: null }]
+          : [{ ref: sZ, season: "zomer" }, { ref: sW, season: "winter" }];
+        const zomerCount = inCat.filter((d) => !d.season || d.season === "zomer").length;
         return (
           <div
             class="menu-panel"
@@ -151,40 +188,45 @@ const filters = [
                 <h2 class="font-display text-4xl sm:text-5xl leading-[1.05] mt-2">{c.label}</h2>
                 {c.sub && <p class="text-sm text-[rgba(34,23,16,0.6)] mt-2">{c.sub}</p>}
               </div>
-              <div class="menu-panel__count" data-menu-count>{inCat.length} gerechten</div>
+              <div class="menu-panel__count" data-menu-count>{zomerCount} gerechten</div>
             </header>
 
-            {spotlight && (
-              <article class="menu-spotlight" data-tags={spotlight.tags.join(",")}>
-                <div class="menu-spotlight__img">
-                  {winterOf(c.spotlight.photo) ? (
-                    <Fragment>
-                      <img data-season-img="zomer" src={c.spotlight.photo} alt={spotlight.name} loading="lazy"/>
-                      <img data-season-img="winter" src={winterOf(c.spotlight.photo)} alt={spotlight.name} loading="lazy"/>
-                    </Fragment>
-                  ) : (
-                    <img src={c.spotlight.photo} alt={spotlight.name} loading="lazy"/>
-                  )}
-                </div>
-                <div class="menu-spotlight__body">
-                  <span class="eyebrow" style="color: var(--season-accent-dark)">Chef's pick</span>
-                  <h3 class="font-display text-3xl sm:text-4xl mt-2 leading-tight">{spotlight.name}</h3>
-                  <p class="text-sm leading-relaxed mt-3 text-[rgba(34,23,16,0.72)] max-w-[44ch]">{spotlight.desc}</p>
-                  <div class="mt-5 flex flex-wrap items-baseline gap-x-4 gap-y-2">
-                    <span class="font-display text-2xl">&euro; {spotlight.price}</span>
-                    <div class="flex flex-wrap gap-1.5">
-                      {spotlight.tags.filter((t) => t !== "signature").map((t) => (
-                        <span class={`menu-tag menu-tag--${t}`}>{t}</span>
-                      ))}
+            {spots.map((s) => {
+              const dish = inCat.find((d) => d.name === s.ref.dish);
+              if (!dish) return null;
+              const w = winterOf(s.ref.photo);
+              return (
+                <article class="menu-spotlight" data-tags={dish.tags.join(",")} data-season={s.season ?? "all"}>
+                  <div class="menu-spotlight__img">
+                    {w ? (
+                      <Fragment>
+                        <img data-season-img="zomer" src={s.ref.photo} alt={dish.name} loading="lazy"/>
+                        <img data-season-img="winter" src={w} alt={dish.name} loading="lazy"/>
+                      </Fragment>
+                    ) : (
+                      <img src={s.ref.photo} alt={dish.name} loading="lazy"/>
+                    )}
+                  </div>
+                  <div class="menu-spotlight__body">
+                    <span class="eyebrow" style="color: var(--season-accent-dark)">Chef's pick</span>
+                    <h3 class="font-display text-3xl sm:text-4xl mt-2 leading-tight">{dish.name}</h3>
+                    <p class="text-sm leading-relaxed mt-3 text-[rgba(34,23,16,0.72)] max-w-[44ch]">{dish.desc}</p>
+                    <div class="mt-5 flex flex-wrap items-baseline gap-x-4 gap-y-2">
+                      <span class="font-display text-2xl">&euro; {dish.price}</span>
+                      <div class="flex flex-wrap gap-1.5">
+                        {dish.tags.filter((t) => t !== "signature").map((t) => (
+                          <span class={`menu-tag menu-tag--${t}`}>{t}</span>
+                        ))}
+                      </div>
                     </div>
                   </div>
-                </div>
-              </article>
-            )}
+                </article>
+              );
+            })}
 
             <div class="menu-grid">
               {rest.map((d) => (
-                <article class="menu-card" data-tags={d.tags.join(",")}>
+                <article class="menu-card" data-tags={d.tags.join(",")} data-season={d.season ?? "all"}>
                   <div class="menu-card__head">
                     <h3 class="menu-card__name">{d.name}</h3>
                     <span class="menu-card__price">&euro; {d.price}</span>
@@ -245,11 +287,14 @@ const filters = [
         panel.hidden = !isActive;
         if (!isActive) return;
 
+        const currentSeason = document.documentElement.getAttribute("data-season") || "zomer";
         const cards = panel.querySelectorAll<HTMLElement>(".menu-card, .menu-spotlight");
         let visible = 0;
         cards.forEach((card) => {
           const tags = (card.dataset.tags || "").split(",").filter(Boolean);
-          const show = activeFilter === "all" || tags.includes(activeFilter);
+          const cardSeason = card.dataset.season || "all";
+          const seasonOk = cardSeason === "all" || cardSeason === currentSeason;
+          const show = seasonOk && (activeFilter === "all" || tags.includes(activeFilter));
           card.style.display = show ? "" : "none";
           if (show) visible++;
         });
@@ -285,6 +330,13 @@ const filters = [
         );
         applyState();
       });
+    });
+
+    // Menu opnieuw filteren wanneer het seizoen wisselt (data-season op <html>).
+    const seasonObserver = new MutationObserver(() => applyState());
+    seasonObserver.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["data-season"],
     });
 
     applyState();
