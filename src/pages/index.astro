@@ -59,6 +59,19 @@ const winterFavorites = [
   { name: "Stoofpotje van Zeeuws rund", desc: "Acht uur gegaard, winterwortel, aardappelpuree", price: "27,50" },
   { name: "Warme chocolademoelleux", desc: "Vloeibaar hart, gezouten karamel, vanille-ijs", price: "11,50" },
 ];
+
+const instagramUrl = "https://www.instagram.com/xumagoes/";
+// Demo-feed met eigen Xuma-beeld; de live-koppeling (auto-laatste-posts) vervangt dit later.
+const igPosts = [
+  "/photos-raw/DSC03555-min-scaled.webp",
+  "/photos/terras-parasols.webp",
+  "/photos/bar.webp",
+  "/photos/yvonne-portret.webp",
+  "/photos-raw/IMG_7253-min-scaled.webp",
+  "/photos/eethoek-daglicht.webp",
+  "/photos/lounge.webp",
+  "/photos-raw/DSC04233-min-scaled.webp",
+];
 ---
 
 <Base>
@@ -444,6 +457,32 @@ const winterFavorites = [
             <source src="/video/sfeer-terras.mp4" type="video/mp4" />
           </video>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Instagram -->
+  <section class="section bg-[var(--color-cream)]">
+    <div class="container">
+      <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-8" data-reveal>
+        <div>
+          <span class="eyebrow">Instagram</span>
+          <h2 class="font-display text-4xl sm:text-5xl mt-3 leading-[1.05]">Volg ons mee, @xumagoes.</h2>
+        </div>
+        <a href={instagramUrl} target="_blank" rel="noopener" class="btn btn-ghost self-start inline-flex items-center gap-2">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+          Volgen op Instagram
+        </a>
+      </div>
+      <div class="ig-grid" data-reveal>
+        {igPosts.map((src) => (
+          <a href={instagramUrl} target="_blank" rel="noopener" class="ig-tile" aria-label="Bekijk Xuma op Instagram">
+            <img src={src} alt="" loading="lazy" decoding="async" />
+            <span class="ig-tile__overlay" aria-hidden="true">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+            </span>
+          </a>
+        ))}
       </div>
     </div>
   </section>
