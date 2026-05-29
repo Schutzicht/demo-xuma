@@ -1288,32 +1288,18 @@ body.has-intro {
   line-height: 1.55;
 }
 
-/* Sfeerimpressie video-band */
-.sfeer-video {
+/* Sfeerimpressie video, contained kader in de sfeer-sectie */
+.sfeer-video-card {
   position: relative;
-  min-height: clamp(360px, 58vh, 640px);
+  aspect-ratio: 16 / 9;
+  border-radius: 14px;
   overflow: hidden;
-  display: grid;
-  align-items: end;
   background: var(--color-ink);
+  box-shadow: 0 24px 50px -28px rgba(34, 23, 16, 0.45);
 }
-.sfeer-video__media {
-  position: absolute;
-  inset: 0;
+.sfeer-video-card__media {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  z-index: 0;
-}
-.sfeer-video__overlay {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  background: linear-gradient(to top, rgba(20, 14, 9, 0.78) 0%, rgba(20, 14, 9, 0.12) 45%, rgba(20, 14, 9, 0.42) 100%);
-}
-.sfeer-video__content {
-  position: relative;
-  z-index: 2;
-  color: var(--color-bone);
-  padding-block: clamp(2.5rem, 7vw, 5rem);
+  display: block;
 }

@@ -390,37 +390,30 @@ const winterFavorites = [
     </div>
   </section>
 
-  <!-- Sfeerimpressie (video) -->
-  <section class="sfeer-video" aria-label="Sfeerimpressie aan de Veste">
-    <video
-      class="sfeer-video__media"
-      autoplay
-      muted
-      loop
-      playsinline
-      preload="metadata"
-      poster="/photos/terras-veste.webp"
-    >
-      <source src="/video/sfeer-terras.mp4" type="video/mp4" />
-    </video>
-    <div class="sfeer-video__overlay"></div>
-    <div class="container sfeer-video__content" data-reveal>
-      <span class="eyebrow text-[var(--color-copper)]">Aan de Veste</span>
-      <h2 class="font-display text-4xl sm:text-5xl md:text-6xl mt-3 leading-[1.02] max-w-[18ch]">
-        Even helemaal weg, midden in Goes.
-      </h2>
-    </div>
-  </section>
-
-  <!-- Gallery -->
+  <!-- Sfeer: video-impressie + galerij -->
   <section class="section">
     <div class="container">
-      <div class="flex items-end justify-between mb-10" data-reveal>
+      <div class="flex items-end justify-between mb-8" data-reveal>
         <div>
-          <span class="eyebrow">Sfeer</span>
+          <span class="eyebrow">Sfeer aan de Veste</span>
           <h2 class="font-display text-4xl sm:text-5xl mt-3 leading-[1.05]">Een blik in huis.</h2>
         </div>
       </div>
+
+      <div class="sfeer-video-card mb-6" data-reveal>
+        <video
+          class="sfeer-video-card__media"
+          autoplay
+          muted
+          loop
+          playsinline
+          preload="metadata"
+          poster="/photos/terras-veste.webp"
+        >
+          <source src="/video/sfeer-terras.mp4" type="video/mp4" />
+        </video>
+      </div>
+
       <div class="grid grid-cols-2 md:grid-cols-4 gap-3" data-reveal>
         <Photo src="/photos/zaal-breed.webp" alt="Restaurantzaal met rotan lampen en strand-decor" aspect="3 / 4"/>
         <Photo src="/photos/terras-overdekt.webp" alt="Overdekt terras met groene kussens en tuinzicht" aspect="3 / 4" class="md:translate-y-6"/>
