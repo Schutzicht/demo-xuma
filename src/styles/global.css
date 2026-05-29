@@ -1345,6 +1345,10 @@ body.has-intro {
   .hero-media img[data-season-img] { animation: none; }
   .scroll-hint svg { animation: none; }
 }
+/* Hero rustiger op mobiel: scroll-hint weg (onderkant is daar al druk) */
+@media (max-width: 639px) {
+  .scroll-hint { display: none; }
+}
 
 /* Open/gesloten-indicator */
 .open-status {
@@ -1476,14 +1480,25 @@ body.reserve-nudge-open .sticky-reserve { display: none; }
   padding-bottom: clamp(2.5rem, 6vh, 4.5rem);
 }
 
-/* Instagram-feed grid */
+/* Instagram-feed: op mobiel een horizontale swipe-carousel, op desktop een raster */
 .ig-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 0.55rem;
+  display: flex;
+  gap: 0.6rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+  padding-bottom: 0.25rem;
 }
+.ig-grid::-webkit-scrollbar { display: none; }
 @media (min-width: 640px) {
-  .ig-grid { grid-template-columns: repeat(4, 1fr); gap: 0.7rem; }
+  .ig-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.7rem;
+    overflow: visible;
+  }
 }
 .ig-tile {
   position: relative;
@@ -1492,6 +1507,11 @@ body.reserve-nudge-open .sticky-reserve { display: none; }
   border-radius: 10px;
   display: block;
   background: var(--color-mocha);
+  flex: 0 0 72%;
+  scroll-snap-align: start;
+}
+@media (min-width: 640px) {
+  .ig-tile { flex: initial; }
 }
 .ig-tile img {
   width: 100%;
