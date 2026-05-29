@@ -1271,7 +1271,8 @@ body.has-intro {
 .page-hero {
   background: var(--color-mocha);
   color: var(--color-bone);
-  padding-top: clamp(8rem, 14vw, 11rem);
+  /* Ruimte = echte topbar-hoogte (dynamisch, ook als de balk wrapt) + marge */
+  padding-top: calc(var(--topbar-h, 130px) + clamp(2rem, 6vw, 4rem));
   padding-bottom: clamp(4rem, 9vw, 7rem);
   position: relative;
   overflow: hidden;
