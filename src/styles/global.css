@@ -333,14 +333,15 @@ body.has-intro {
   z-index: 80;
   background: var(--color-ink);
   color: var(--color-bone);
-  display: grid;
-  place-items: center;
+  display: flex;
   padding: 1.5rem;
-  overflow: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
   transition: opacity 0.5s ease;
 }
 .demo-intro.is-leaving { opacity: 0; pointer-events: none; }
-.demo-intro__bg { position: absolute; inset: 0; z-index: 0; }
+.demo-intro__bg { position: fixed; inset: 0; z-index: 0; }
 .demo-intro__bg img { width: 100%; height: 100%; object-fit: cover; opacity: 0.6; }
 .demo-intro__bg::after {
   content: "";
@@ -352,7 +353,9 @@ body.has-intro {
 .demo-intro__inner {
   position: relative;
   z-index: 2;
+  width: 100%;
   max-width: 600px;
+  margin: auto;
   text-align: left;
   background: rgba(20, 14, 9, 0.42);
   backdrop-filter: blur(12px) saturate(140%);
