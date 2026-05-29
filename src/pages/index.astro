@@ -401,12 +401,17 @@ const winterFavorites = [
       </div>
 
       <div class="sfeer-video-card mb-6" data-reveal>
-        <img
+        <video
           class="sfeer-video-card__media"
-          src="/photos/sfeer-terras-gasten.webp"
-          alt="Gasten die lunchen op het terras aan de Veste"
-          loading="lazy"
-        />
+          autoplay
+          muted
+          loop
+          playsinline
+          preload="metadata"
+          poster="/photos/sfeer-terras-gasten.webp"
+        >
+          <source src="/video/sfeer-terras.mp4" type="video/mp4" />
+        </video>
       </div>
 
       <div class="grid grid-cols-2 md:grid-cols-4 gap-3" data-reveal>
