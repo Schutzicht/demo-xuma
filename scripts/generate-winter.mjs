@@ -2,13 +2,13 @@
 /**
  * Winter-versies van bestaande zomerfoto's via Nano Banana Pro (Gemini 3 Pro Image).
  * Image-to-image: bestaande foto als referentie + winter-transformatie-prompt.
+ * Output-naam = basename van de bronfoto, zodat Photo.astro de winterversie
+ * automatisch koppelt via /photos/winter/<basename>.webp.
  *
  * Usage:
- *   node scripts/generate-winter.mjs                 # alle ontbrekende
- *   node scripts/generate-winter.mjs -- --force      # alles opnieuw (kost geld)
- *   node scripts/generate-winter.mjs -- --only=winter-tafel-veste --force
- *
- * Vereist GEMINI_API_KEY (uit ~/.zshrc shell-env). Draai via:  source ~/.zshrc && node ...
+ *   source ~/.zshrc && node scripts/generate-winter.mjs                 # alle ontbrekende
+ *   source ~/.zshrc && node scripts/generate-winter.mjs -- --force      # alles opnieuw (kost geld)
+ *   source ~/.zshrc && node scripts/generate-winter.mjs -- --only=bar --force
  */
 
 import { GoogleGenAI } from "@google/genai";
@@ -22,7 +22,7 @@ const PROJECT_ROOT = path.join(__dirname, "..");
 const RAW_DIR = path.join(PROJECT_ROOT, "public", "photos", "winter", "_raw");
 
 if (!process.env.GEMINI_API_KEY) {
-  console.error("\x1b[31mGEMINI_API_KEY is niet gezet.\x1b[0m  Draai: source ~/.zshrc && node scripts/generate-winter.mjs");
+  console.error("\x1b[31mGEMINI_API_KEY niet gezet.\x1b[0m  Draai: source ~/.zshrc && node scripts/generate-winter.mjs");
   process.exit(1);
 }
 
@@ -32,44 +32,40 @@ const ONLY = args.find((a) => a.startsWith("--only="))?.split("=")[1];
 
 const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 
-// Gedeelde transformatie-instructie: zelfde scene, alleen het seizoen verandert.
 const BASE = [
   "Transform this exact restaurant scene into deep winter.",
   "Keep the architecture, furniture, materials, layout, camera angle and composition IDENTICAL to the reference photo.",
   "Change ONLY the season and atmosphere as described.",
-  "Photorealistic editorial restaurant photography, magazine-quality finish, calm and serene.",
+  "Photorealistic editorial restaurant photography, magazine-quality finish.",
   "No people in frame. No text, no logos, no watermarks, no signage, no snowmen, no christmas kitsch.",
 ].join(" ");
 
+// name = basename van de bronfoto (zonder extensie). ref = pad t.o.v. project root.
 const IMAGES = [
-  {
-    name: "winter-tafel-veste",
-    ref: "public/photos-raw/DSC01206-min-scaled.webp",
-    prompt:
-      "An intimate set table for two at the edge of the waterside terrace, overlooking the canal (de Veste). " +
-      "Across the water: bare leafless trees lightly dusted with snow, a quiet Dutch canal under soft grey-blue overcast winter light. " +
-      "A thin layer of snow on the terrace railing and decking. Cold, muted winter palette (slate, pale blue, warm wood). " +
-      "A soft warm amber glow spills from the restaurant interior. Keep the table setting, glassware and rattan chairs identical. " +
-      "Foreground clean and softly out of focus, no orange decorative orbs.",
-  },
-  {
-    name: "winter-terras",
-    ref: "public/photos/terras-veste.webp",
-    prompt:
-      "The wide covered waterside terrace beside the canal in winter. " +
-      "Bare frosted trees and a calm grey canal in the background, a dusting of snow on the wooden deck and railing, " +
-      "soft diffuse overcast daylight, cold muted palette. The rattan chairs and balinese parasol stay in place but wintery. " +
-      "Warm light glows from the windows of the restaurant. Serene, editorial, no people.",
-  },
-  {
-    name: "winter-interieur",
-    ref: "public/photos-raw/IMG_7270-min-scaled.webp",
-    prompt:
-      "The warm restaurant interior with the two golden sunburst wall lamps and boucle chairs, unchanged. " +
-      "Through the window a calm snowy winter garden is visible: bare trees with snow, cold pale daylight outside. " +
-      "Inside the lighting is cosy and warm, amber and gold, candles on the set tables. " +
-      "Strong contrast between the cold light outside and the warm glow inside. Editorial, calm, no people.",
-  },
+  { name: "terras-parasols", ref: "public/photos/terras-parasols.webp",
+    prompt: "Covered waterside terrace with rattan furniture and a balinese parasol in winter. A layer of snow on the wooden deck and railing, bare frosted trees and a calm grey canal beyond, cold pale overcast daylight, warm amber glow spilling from the restaurant windows. Serene and calm." },
+  { name: "terras-overdekt", ref: "public/photos/terras-overdekt.webp",
+    prompt: "Covered terrace with green-patterned cushions and rattan chairs in winter. A snowy bare garden visible through the glass, cold grey daylight outside, light snow on the decking, cosy warm interior lighting inside. Calm winter mood." },
+  { name: "zaal-breed", ref: "public/photos/zaal-breed.webp",
+    prompt: "Wide restaurant dining room with rattan pendant lamps and beachy decor in winter. The windows reveal a snowy garden, the interior is lit warm and amber with candles on the tables, cosy intimate winter evening atmosphere. Strong warm-inside vs cold-outside contrast." },
+  { name: "lounge", ref: "public/photos/lounge.webp",
+    prompt: "Lounge area with soft boucle chairs in winter. A snowy view through the large windows, cold blue daylight outside, warm cosy interior lighting, candles. Calm, intimate winter mood." },
+  { name: "eethoek-bank", ref: "public/photos/eethoek-bank.webp",
+    prompt: "Dining nook with a banquette and woven wall decor in winter. Warm cosy lamplight and candles, a snowy window view nearby with cold light, intimate winter dining atmosphere." },
+  { name: "eethoek-daglicht", ref: "public/photos/eethoek-daglicht.webp",
+    prompt: "Dining nook with a rattan pendant lamp in winter. The large windows show a snowy winter garden with bare trees, cold pale daylight outside, warm amber interior glow and candles on the table." },
+  { name: "bar", ref: "public/photos/bar.webp",
+    prompt: "The curved white bar with hanging glassware and boucle bar stools in winter. Warm intimate evening lighting, a frosted snowy window nearby with cold blue light, cosy winter bar mood." },
+  { name: "IMG_7253-min-scaled", ref: "public/photos-raw/IMG_7253-min-scaled.webp",
+    prompt: "An elegant set table with wine glasses on light wood in winter. Soft cool daylight from a frosted window, a hint of a snowy view outside, warm candlelight on the table. Calm and minimal." },
+  { name: "DSC01018-min-scaled", ref: "public/photos-raw/DSC01018-min-scaled.webp",
+    prompt: "Interior detail with the golden sunburst wall lamp and boucle chairs in winter. A snowy window view with cold light, warm cosy lamplight inside, candles on the set table. Calm winter mood." },
+  { name: "IMG_7122V2-min-scaled", ref: "public/photos-raw/IMG_7122V2-min-scaled.webp",
+    prompt: "Cosy nook with woven wall plates and fringed cushions in winter. Warm amber lighting and candles, a hint of cold snowy light from a nearby window. Intimate winter atmosphere." },
+  { name: "IMG_7124-min-scaled", ref: "public/photos-raw/IMG_7124-min-scaled.webp",
+    prompt: "Covered veranda terrace with striped cushion benches in winter. Light snow on the wooden deck, bare snowy trees and garden beyond, cold pale daylight, warm glow from the windows inside." },
+  { name: "IMG_7396-min-scaled", ref: "public/photos-raw/IMG_7396-min-scaled.webp",
+    prompt: "The bar with hanging glassware and bottles in winter. Warm intimate evening lighting, cosy winter mood, a frosted snowy window with cold blue light in the background." },
 ];
 
 const filtered = ONLY ? IMAGES.filter((i) => i.name === ONLY) : IMAGES;

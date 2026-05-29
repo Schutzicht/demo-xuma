@@ -1,5 +1,14 @@
 ---
 import Base from "../layouts/Base.astro";
+import fs from "node:fs";
+import path from "node:path";
+
+// Winterversie van een foto als die bestaat op /photos/winter/<basename>.
+const winterOf = (src: string): string | null => {
+  const base = src.split("/").pop();
+  const cand = `/photos/winter/${base}`;
+  return fs.existsSync(path.join(process.cwd(), "public", cand.slice(1))) ? cand : null;
+};
 
 interface Dish {
   cat: string;
@@ -148,7 +157,14 @@ const filters = [
             {spotlight && (
               <article class="menu-spotlight" data-tags={spotlight.tags.join(",")}>
                 <div class="menu-spotlight__img">
-                  <img src={c.spotlight.photo} alt={spotlight.name} loading="lazy"/>
+                  {winterOf(c.spotlight.photo) ? (
+                    <Fragment>
+                      <img data-season-img="zomer" src={c.spotlight.photo} alt={spotlight.name} loading="lazy"/>
+                      <img data-season-img="winter" src={winterOf(c.spotlight.photo)} alt={spotlight.name} loading="lazy"/>
+                    </Fragment>
+                  ) : (
+                    <img src={c.spotlight.photo} alt={spotlight.name} loading="lazy"/>
+                  )}
                 </div>
                 <div class="menu-spotlight__body">
                   <span class="eyebrow" style="color: var(--season-accent-dark)">Chef's pick</span>

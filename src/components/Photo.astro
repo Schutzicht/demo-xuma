@@ -1,4 +1,7 @@
 ---
+import fs from "node:fs";
+import path from "node:path";
+
 interface Props {
   src?: string;
   alt?: string;
@@ -6,8 +9,25 @@ interface Props {
   class?: string;
 }
 const { src, alt = "", aspect = "4 / 5", class: extra = "" } = Astro.props;
+
+// Als er een winterversie bestaat op /photos/winter/<basename>, maak de foto
+// seizoens-wisselend (zomer-bron + winter-variant, wisselt via [data-season]).
+let winterSrc: string | undefined;
+if (src) {
+  const base = src.split("/").pop();
+  const candidate = `/photos/winter/${base}`;
+  if (fs.existsSync(path.join(process.cwd(), "public", candidate.slice(1)))) {
+    winterSrc = candidate;
+  }
+}
 ---
 
 <div class={`photo ${extra}`} style={`aspect-ratio: ${aspect};`}>
-  {src && <img src={src} alt={alt} loading="lazy" />}
+  {src && !winterSrc && <img src={src} alt={alt} loading="lazy" />}
+  {src && winterSrc && (
+    <Fragment>
+      <img data-season-img="zomer" src={src} alt={alt} loading="lazy" />
+      <img data-season-img="winter" src={winterSrc} alt={alt} loading="lazy" />
+    </Fragment>
+  )}
 </div>
