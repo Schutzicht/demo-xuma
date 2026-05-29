@@ -1465,15 +1465,10 @@ body.reserve-nudge-open .sticky-reserve { display: none; }
 /* Immersieve hero: volwaardige, responsive hoogte met tekst gecentreerd
    in de zichtbare zone onder de zwevende topbar. */
 .hero-section {
-  min-height: clamp(640px, 90vh, 940px);
-  min-height: clamp(640px, 90svh, 940px);
+  min-height: 100vh;
+  min-height: 100svh;
   display: flex;
   align-items: center;
   padding-top: var(--topbar-h, 92px);
   padding-bottom: clamp(2.5rem, 6vh, 4.5rem);
-}
-@media (max-width: 640px) {
-  .hero-section {
-    min-height: clamp(560px, 86svh, 780px);
-  }
 }
