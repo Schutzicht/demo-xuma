@@ -82,25 +82,20 @@ const {
       // Seizoen detectie zo vroeg mogelijk om FOUC te voorkomen
       (function () {
         const stored = localStorage.getItem("xuma-season");
-        const seasons = ["lente", "zomer", "herfst", "winter"];
+        const seasons = ["zomer", "winter"];
         let season = stored && seasons.indexOf(stored) >= 0 ? stored : null;
         if (!season) {
           const m = new Date().getMonth();
-          if (m >= 2 && m <= 4) season = "lente";
-          else if (m >= 5 && m <= 7) season = "zomer";
-          else if (m >= 8 && m <= 10) season = "herfst";
-          else season = "winter";
+          season = m >= 3 && m <= 8 ? "zomer" : "winter";
         }
         document.documentElement.setAttribute("data-season", season);
       })();
     </script>
 
     <script>
-      type Season = "lente" | "zomer" | "herfst" | "winter";
+      type Season = "zomer" | "winter";
       const SEASON_LABELS: Record<Season, string> = {
-        lente: "Lente",
         zomer: "Zomer",
-        herfst: "Herfst",
         winter: "Winter",
       };
 
@@ -256,7 +251,7 @@ const {
       const switchOptions = document.querySelectorAll<HTMLButtonElement>("[data-season-option]");
 
       const isSeason = (v: string | null): v is Season =>
-        v === "lente" || v === "zomer" || v === "herfst" || v === "winter";
+        v === "zomer" || v === "winter";
 
       const setSeason = (s: Season) => {
         document.documentElement.setAttribute("data-season", s);
