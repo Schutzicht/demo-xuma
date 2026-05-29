@@ -335,13 +335,43 @@ body.has-intro {
   color: var(--color-bone);
   display: grid;
   place-items: center;
-  padding: 2rem;
+  padding: 1.5rem;
+  overflow: hidden;
   transition: opacity 0.5s ease;
 }
 .demo-intro.is-leaving { opacity: 0; pointer-events: none; }
+.demo-intro__bg { position: absolute; inset: 0; z-index: 0; }
+.demo-intro__bg img { width: 100%; height: 100%; object-fit: cover; opacity: 0.6; }
+.demo-intro__bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg, rgba(20, 14, 9, 0.95) 0%, rgba(20, 14, 9, 0.74) 52%, rgba(20, 14, 9, 0.5) 100%);
+}
+.demo-intro .strand-rail { z-index: 1; }
 .demo-intro__inner {
-  max-width: 620px;
+  position: relative;
+  z-index: 2;
+  max-width: 600px;
   text-align: left;
+  background: rgba(20, 14, 9, 0.42);
+  backdrop-filter: blur(12px) saturate(140%);
+  -webkit-backdrop-filter: blur(12px) saturate(140%);
+  border: 1px solid rgba(246, 239, 227, 0.14);
+  border-radius: 22px;
+  padding: clamp(1.6rem, 4.5vw, 2.8rem);
+  box-shadow: 0 40px 90px -34px rgba(0, 0, 0, 0.7);
+  animation: introIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+@keyframes introIn {
+  from { opacity: 0; transform: translateY(16px) scale(0.985); }
+  to { opacity: 1; transform: none; }
+}
+.demo-intro__logo {
+  height: 2rem;
+  width: auto;
+  margin-bottom: 1.4rem;
+  opacity: 0.95;
 }
 .demo-intro__eyebrow {
   font-size: 0.72rem;
@@ -1256,4 +1286,34 @@ body.has-intro {
   margin-top: 1rem;
   font-size: 1.05rem;
   line-height: 1.55;
+}
+
+/* Sfeerimpressie video-band */
+.sfeer-video {
+  position: relative;
+  min-height: clamp(360px, 58vh, 640px);
+  overflow: hidden;
+  display: grid;
+  align-items: end;
+  background: var(--color-ink);
+}
+.sfeer-video__media {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+}
+.sfeer-video__overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(to top, rgba(20, 14, 9, 0.78) 0%, rgba(20, 14, 9, 0.12) 45%, rgba(20, 14, 9, 0.42) 100%);
+}
+.sfeer-video__content {
+  position: relative;
+  z-index: 2;
+  color: var(--color-bone);
+  padding-block: clamp(2.5rem, 7vw, 5rem);
 }
