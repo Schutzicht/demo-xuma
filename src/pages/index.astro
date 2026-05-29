@@ -393,25 +393,31 @@ const winterFavorites = [
   <!-- Sfeer: video-impressie + galerij -->
   <section class="section">
     <div class="container">
-      <div class="flex items-end justify-between mb-8" data-reveal>
-        <div>
+      <div class="grid lg:grid-cols-[1fr_1.05fr] gap-10 lg:gap-14 items-center mb-12 lg:mb-16">
+        <div data-reveal>
           <span class="eyebrow">Sfeer aan de Veste</span>
           <h2 class="font-display text-4xl sm:text-5xl mt-3 leading-[1.05]">Een blik in huis.</h2>
+          <p class="mt-5 text-base leading-relaxed text-[rgba(34,23,16,0.78)] max-w-[46ch]">
+            Warme kleuren, handgeweven textiel en het water binnen handbereik. Kom even helemaal tot rust aan de Veste, midden in Goes.
+          </p>
+          <a href="/reserveren" class="inline-flex items-center gap-2 mt-7 text-sm font-medium text-[var(--color-copper-dark)] hover:text-[var(--color-copper)]">
+            Reserveer een tafel
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
+          </a>
         </div>
-      </div>
-
-      <div class="sfeer-video-card mb-6" data-reveal>
-        <video
-          class="sfeer-video-card__media"
-          autoplay
-          muted
-          loop
-          playsinline
-          preload="metadata"
-          poster="/photos/sfeer-terras-gasten.webp"
-        >
-          <source src="/video/sfeer-terras.mp4" type="video/mp4" />
-        </video>
+        <div class="sfeer-video-card" data-reveal>
+          <video
+            class="sfeer-video-card__media"
+            autoplay
+            muted
+            loop
+            playsinline
+            preload="metadata"
+            poster="/photos/sfeer-terras-gasten.webp"
+          >
+            <source src="/video/sfeer-terras.mp4" type="video/mp4" />
+          </video>
+        </div>
       </div>
 
       <div class="grid grid-cols-2 md:grid-cols-4 gap-3" data-reveal>
