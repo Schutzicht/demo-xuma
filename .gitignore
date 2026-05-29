@@ -11,3 +11,6 @@ public/Kennismaking Xuma.md
 # Ruwe professionele foto-originelen (10-14MB elk) - lokaal bewaren, niet in repo
 # De geoptimaliseerde webp-versies staan in public/photos/
 public/Xuma Goes/
+
+# Ruwe (PNG) output van de winter-beeldgeneratie - alleen de webp's in public/photos/winter/ committen
+public/photos/winter/_raw/
