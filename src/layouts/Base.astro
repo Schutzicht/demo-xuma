@@ -286,6 +286,31 @@ const ogImageAbs = new URL(ogImage, Astro.site ?? "https://demo-xuma.vercel.app"
             swToggle?.setAttribute("aria-expanded", "false");
           })
         );
+
+        // Open/gesloten-indicator (dagelijks 11:00 tot 23:00)
+        const statusEl = document.querySelector<HTMLElement>("[data-open-status]");
+        const statusText = document.querySelector<HTMLElement>("[data-open-status-text]");
+        if (statusEl && statusText) {
+          const h = new Date().getHours();
+          const open = h >= 11 && h < 23;
+          statusEl.setAttribute("data-open", open ? "ja" : "nee");
+          statusText.textContent = open
+            ? "Nu open, tot 23:00"
+            : h < 11
+            ? "Gesloten, opent om 11:00"
+            : "Gesloten, tot morgen 11:00";
+        }
+
+        // Nieuwsbrief (demo, geen backend)
+        const news = document.querySelector<HTMLFormElement>("[data-newsletter]");
+        const newsDone = document.querySelector<HTMLElement>("[data-newsletter-done]");
+        if (news) {
+          news.addEventListener("submit", (e) => {
+            e.preventDefault();
+            news.hidden = true;
+            if (newsDone) newsDone.hidden = false;
+          });
+        }
       }
 
       document.addEventListener("astro:page-load", setupPage);

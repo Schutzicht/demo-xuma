@@ -23,11 +23,11 @@ if (src) {
 ---
 
 <div class={`photo ${extra}`} style={`aspect-ratio: ${aspect};`}>
-  {src && !winterSrc && <img src={src} alt={alt} loading="lazy" />}
+  {src && !winterSrc && <img src={src} alt={alt} loading="lazy" decoding="async" />}
   {src && winterSrc && (
     <Fragment>
-      <img data-season-img="zomer" src={src} alt={alt} loading="lazy" />
-      <img data-season-img="winter" src={winterSrc} alt={alt} loading="lazy" />
+      <img data-season-img="zomer" src={src} alt={alt} loading="lazy" decoding="async" />
+      <img data-season-img="winter" src={winterSrc} alt={alt} loading="lazy" decoding="async" />
     </Fragment>
   )}
 </div>

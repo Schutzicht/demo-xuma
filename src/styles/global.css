@@ -107,7 +107,7 @@ body.has-intro {
 }
 
 .section {
-  padding-block: clamp(4rem, 8vw, 7rem);
+  padding-block: clamp(5rem, 9.5vw, 9rem);
 }
 
 .container {
@@ -1303,4 +1303,103 @@ body.has-intro {
   height: 100%;
   object-fit: cover;
   display: block;
+}
+
+/* Ken Burns op de hero-achtergrond (subtiel leven), uit bij reduced motion */
+@keyframes kenburns {
+  from { transform: scale(1.02); }
+  to { transform: scale(1.1); }
+}
+.hero-media img[data-season-img] {
+  animation: kenburns 26s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+/* Scroll-hint onderaan de hero */
+.scroll-hint {
+  position: absolute;
+  left: 50%;
+  bottom: 1.6rem;
+  transform: translateX(-50%);
+  z-index: 3;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  color: rgba(246, 239, 227, 0.72);
+  font-size: 0.6rem;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  pointer-events: none;
+}
+.scroll-hint svg { animation: scrollNudge 2s ease-in-out infinite; }
+@keyframes scrollNudge {
+  0%, 100% { transform: translateY(0); opacity: 0.55; }
+  50% { transform: translateY(5px); opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-media img[data-season-img] { animation: none; }
+  .scroll-hint svg { animation: none; }
+}
+
+/* Open/gesloten-indicator */
+.open-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.8rem;
+  margin-top: 0.7rem;
+  color: rgba(246, 239, 227, 0.85);
+}
+.open-status__dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: rgba(246, 239, 227, 0.4);
+  flex-shrink: 0;
+}
+.open-status[data-open="ja"] .open-status__dot {
+  background: #7aa873;
+  box-shadow: 0 0 0 3px rgba(122, 168, 115, 0.18);
+}
+.open-status[data-open="nee"] .open-status__dot { background: #c08a63; }
+
+/* Nieuwsbrief in de footer */
+.footer-news {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.9rem;
+  max-width: 340px;
+}
+.footer-news input {
+  flex: 1;
+  min-width: 0;
+  background: rgba(246, 239, 227, 0.08);
+  border: 1px solid rgba(246, 239, 227, 0.18);
+  border-radius: 999px;
+  padding: 0.5rem 0.9rem;
+  color: var(--color-bone);
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+}
+.footer-news input::placeholder { color: rgba(246, 239, 227, 0.45); }
+.footer-news input:focus { outline: none; border-color: var(--color-copper); }
+.footer-news button {
+  flex-shrink: 0;
+  background: var(--color-copper);
+  color: var(--color-ink);
+  border: 0;
+  border-radius: 999px;
+  padding: 0.5rem 1.05rem;
+  font-size: 0.82rem;
+  font-weight: 500;
+  cursor: pointer;
+  font-family: var(--font-body);
+}
+.footer-news button:hover { background: var(--color-bone); }
+.footer-news__done {
+  margin-top: 0.9rem;
+  font-size: 0.82rem;
+  color: rgba(246, 239, 227, 0.8);
 }
