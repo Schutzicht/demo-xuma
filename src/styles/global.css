@@ -1292,6 +1292,10 @@ body.has-intro {
 .sfeer-video-card {
   position: relative;
   aspect-ratio: 16 / 9;
+  /* Gecentreerd en begrensd: de 1344px-bron wordt zo niet opgeschaald,
+     ook niet op retina, dus scherp. Tegelijk subtieler dan full-width. */
+  max-width: 720px;
+  margin-inline: auto;
   border-radius: 14px;
   overflow: hidden;
   background: var(--color-ink);
