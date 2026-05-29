@@ -1403,3 +1403,61 @@ body.has-intro {
   font-size: 0.82rem;
   color: rgba(246, 239, 227, 0.8);
 }
+
+/* Subtiele reserveer-nudge (rechtsonder, schuift in) */
+.reserve-nudge {
+  position: fixed;
+  right: 1rem;
+  bottom: 1rem;
+  z-index: 46;
+  width: min(320px, calc(100vw - 2rem));
+  background: var(--color-bone);
+  color: var(--color-ink);
+  border: 1px solid var(--color-line);
+  border-radius: 16px;
+  padding: 1.15rem 1.2rem 1.25rem;
+  box-shadow: 0 24px 50px -18px rgba(34, 23, 16, 0.45);
+  transform: translateY(140%);
+  opacity: 0;
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.45s ease;
+}
+.reserve-nudge.is-open {
+  transform: none;
+  opacity: 1;
+}
+.reserve-nudge__close {
+  position: absolute;
+  top: 0.55rem;
+  right: 0.55rem;
+  background: transparent;
+  border: 0;
+  color: rgba(34, 23, 16, 0.45);
+  cursor: pointer;
+  padding: 0.25rem;
+  line-height: 0;
+}
+.reserve-nudge__close:hover { color: var(--color-ink); }
+.reserve-nudge__eyebrow {
+  font-size: 0.66rem;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--season-accent-dark);
+  margin-bottom: 0.4rem;
+}
+.reserve-nudge__text {
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: rgba(34, 23, 16, 0.78);
+  margin-bottom: 0.95rem;
+}
+.reserve-nudge__cta {
+  width: 100%;
+  justify-content: center;
+}
+body.reserve-nudge-open .sticky-reserve { display: none; }
+@media (prefers-reduced-motion: reduce) {
+  .reserve-nudge { transition: opacity 0.3s ease; transform: none; }
+}
+@media (max-width: 640px) {
+  .reserve-nudge { right: 0.75rem; bottom: 0.75rem; }
+}

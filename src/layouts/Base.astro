@@ -77,6 +77,16 @@ const ogImageAbs = new URL(ogImage, Astro.site ?? "https://demo-xuma.vercel.app"
       </svg>
     </button>
 
+    <!-- Subtiele reserveer-nudge (schuift rechtsonder in i.p.v. midden-scherm popup) -->
+    <div class="reserve-nudge" data-reserve-nudge hidden role="dialog" aria-label="Reserveren">
+      <button type="button" class="reserve-nudge__close" data-reserve-nudge-close aria-label="Sluiten">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="6" y1="6" x2="18" y2="18"/><line x1="6" y1="18" x2="18" y2="6"/></svg>
+      </button>
+      <div class="reserve-nudge__eyebrow">Reserveren</div>
+      <p class="reserve-nudge__text">Zin om langs te komen? Reserveer eenvoudig je tafel aan de Veste.</p>
+      <button type="button" class="btn btn-primary reserve-nudge__cta" data-zenchef-open data-reserve-nudge-cta>Tafel reserveren</button>
+    </div>
+
     <Analytics />
 
     <script is:inline>
@@ -154,9 +164,15 @@ const ogImageAbs = new URL(ogImage, Astro.site ?? "https://demo-xuma.vercel.app"
       }
       function maybeAutoOpenZenchef() {
         if (sessionStorage.getItem("xuma-zenchef-seen") === "1") return;
+        const nudge = document.querySelector<HTMLElement>("[data-reserve-nudge]");
+        if (!nudge) return;
         setTimeout(() => {
-          if (sessionStorage.getItem("xuma-zenchef-seen") !== "1") openModal();
-        }, 1500);
+          if (sessionStorage.getItem("xuma-zenchef-seen") === "1") return;
+          sessionStorage.setItem("xuma-zenchef-seen", "1");
+          nudge.hidden = false;
+          document.body.classList.add("reserve-nudge-open");
+          requestAnimationFrame(() => requestAnimationFrame(() => nudge.classList.add("is-open")));
+        }, 2200);
       }
 
       // ── Eenmalige document/window-listeners (delegated, queryen live) ──
@@ -311,6 +327,20 @@ const ogImageAbs = new URL(ogImage, Astro.site ?? "https://demo-xuma.vercel.app"
             if (newsDone) newsDone.hidden = false;
           });
         }
+
+        // Reserveer-nudge sluiten
+        const nudge = document.querySelector<HTMLElement>("[data-reserve-nudge]");
+        const hideNudge = () => {
+          if (!nudge) return;
+          nudge.classList.remove("is-open");
+          document.body.classList.remove("reserve-nudge-open");
+          setTimeout(() => {
+            if (nudge && !nudge.classList.contains("is-open")) nudge.hidden = true;
+          }, 320);
+        };
+        document
+          .querySelectorAll<HTMLButtonElement>("[data-reserve-nudge-close], [data-reserve-nudge-cta]")
+          .forEach((b) => b.addEventListener("click", hideNudge));
       }
 
       document.addEventListener("astro:page-load", setupPage);
