@@ -311,12 +311,19 @@ body.has-intro {
   background: var(--color-bone);
   display: flex;
   flex-direction: column;
-  padding: 5rem 2rem 2rem;
+  /* Begin onder de fixed topbar (SeasonBar + Header) zodat de inhoud en de
+     sluitknop niet achter de seizoensbanner vallen. */
+  padding: calc(var(--topbar-h, 92px) + 1.25rem) 2rem 2rem;
   transform: translateY(-100%);
   transition: transform 0.32s ease;
-  z-index: 30;
+  /* Boven de topbar (z-index 40) zodat het paneel de banner netjes afdekt. */
+  z-index: 45;
 }
 .nav-panel.is-open { transform: none; }
+/* Sluitknop volgt dezelfde topbar-offset als de paneelinhoud. */
+.nav-panel [data-nav-toggle] {
+  top: calc(var(--topbar-h, 92px) + 0.75rem);
+}
 .nav-panel a {
   font-family: var(--font-display);
   font-size: 2rem;
